@@ -38,12 +38,24 @@ def Initialize(subdata):
     # Arrow vertices
     LarrowVert = [(0.2,0.05),(0.2,-0.05),(0,-0.05),(0,-0.1),(-.2,0),(0,0.1),(0,0.05)]
     RarrowVert = [(-0.2,0.05),(-0.2,-0.05),(0,-0.05),(0,-0.1),(.2,0),(0,0.1),(0,0.05)]
+    UparrowVert = [(-0.05, -0.2), (0.05, -0.2), (0.05, 0), (0.1, 0), (0, 0.2), (-0.1, 0), (-0.05, 0)]  # Centered vertical arrow
 
     # Arrow stimuli
     settings.Larrow = ShapeStim(win, vertices=LarrowVert, fillColor='black', size=8, lineColor=None)
     settings.Rarrow = ShapeStim(win, vertices=RarrowVert, fillColor='black', size=8, lineColor=None)
     settings.LarrowSTOP = ShapeStim(win, vertices=LarrowVert, fillColor='red', size=8, lineColor=None)
     settings.RarrowSTOP = ShapeStim(win, vertices=RarrowVert, fillColor='red', size=8, lineColor=None)
+    settings.UparrowSTOP = ShapeStim(win, vertices=UparrowVert, fillColor='black', size=8, lineColor=None)
+    
+    settings.twoArrows = False  # set True to enable both arrows
+    if settings.twoArrows:
+        settings.arrowTypes = [1, 2]  # 1 = left, 2 = right
+    else:
+        settings.arrowTypes = [2]     # only right arrow
+    
+    # set stop type: 
+    settings.useUpArrowStop = True  # if True, show ↑ instead of red ←/→ for stop signal
+    
 
     # Timing and staircase
     settings.initSSD = 200

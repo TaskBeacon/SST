@@ -75,20 +75,19 @@ def generate_valid_rstims(n_trials):
     return rstims
 
 
-def generate_arrow_sequence(rstims):
-    """Assigns randomized arrow directions (1 = left, 2 = right)"""
+def generate_arrow_sequence(rstims, arrowTypes):
+    """Assigns randomized arrow directions"""
     n_trials = len(rstims)
     arrows = np.zeros(n_trials, dtype=int)
 
     stop_idx = np.where(rstims == 1)[0]
     go_idx = np.where(rstims == 0)[0]
 
-    left_right = [1, 2]
-    arrows_stop = np.tile(left_right, len(stop_idx) // 2)
-    arrows_go = np.tile(left_right, len(go_idx) // 2)
+    arrows_stop = np.tile(arrowTypes, len(stop_idx) // len(arrowTypes))
+    arrows_go = np.tile(arrowTypes, len(go_idx) // len(arrowTypes))
 
-    random.shuffle(arrows_stop)
-    random.shuffle(arrows_go)
+    np.random.shuffle(arrows_stop)
+    np.random.shuffle(arrows_go)
 
     for i, idx in enumerate(stop_idx):
         arrows[idx] = arrows_stop[i]
