@@ -55,7 +55,7 @@ def Initialize(subdata):
         settings.arrowTypes = [2]     # only right arrow
     
     # set stop type: 
-    settings.useUpArrowStop = True  # if True, show ↑ instead of red ←/→ for stop signal
+    settings.useUpArrowStop = False  # if True, show ↑ instead of red ←/→ for stop signal
     
 
     # Timing and staircase

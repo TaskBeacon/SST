@@ -1,0 +1,35 @@
+27.7843 	DATA 	Keypress: p
+27.7847 	DATA 	Trial 1: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=872ms
+29.8641 	DATA 	Keypress: p
+29.8645 	DATA 	Trial 2: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=448ms
+32.2653 	DATA 	Keypress: p
+32.2657 	DATA 	Trial 3: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=349ms
+34.8135 	DATA 	Keypress: p
+34.8136 	DATA 	Trial 4: Block=1, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=187ms
+37.3443 	DATA 	Keypress: p
+37.3447 	DATA 	Trial 5: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=430ms
+39.9641 	DATA 	Keypress: p
+39.9646 	DATA 	Trial 6: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=553ms
+42.3743 	DATA 	Keypress: p
+42.3747 	DATA 	Trial 7: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=442ms
+45.0839 	DATA 	Keypress: p
+45.0842 	DATA 	Trial 8: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=669ms
+47.9258 	DATA 	No keypress (maxWait exceeded)
+47.9259 	DATA 	Trial 9: Block=1, Type=STOP, Arrow=2, Resp=0, ACC=3, RT=0ms
+49.8948 	DATA 	Keypress: p
+49.8950 	DATA 	Trial 10: Block=1, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=272ms
+54.1408 	DATA 	Keypress: space
+89.1315 	DATA 	Mouse: Left button down, pos=(1174,529)
+89.2280 	DATA 	Mouse:  Left button up, pos=(1174,529)
+89.7758 	DATA 	Keypress: space
+91.8731 	DATA 	Keypress: lctrl
+92.1937 	DATA 	Keypress: q
+94.3540 	DATA 	No keypress (maxWait exceeded)
+95.8432 	DATA 	Trial 11: Block=2, Type=GO, Arrow=2, Resp=0, ACC=-1, RT=0ms
+95.9860 	DATA 	Mouse: Left button down, pos=(989,627)
+96.0891 	DATA 	Mouse:  Left button up, pos=(989,627)
+96.3558 	DATA 	Keypress: lctrl
+97.3236 	DATA 	Keypress: q
+97.3448 	DATA 	Trial 12: Block=2, Type=GO, Arrow=2, Resp=1, ACC=0, RT=990ms
+97.9269 	DATA 	Keypress: q
+98.1684 	DATA 	Keypress: q

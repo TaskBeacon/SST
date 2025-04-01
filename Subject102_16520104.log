@@ -1,0 +1,47 @@
+23.6184 	DATA 	No keypress (maxWait exceeded)
+24.5730 	DATA 	Keypress: menu
+24.9165 	DATA 	Keypress: p
+25.1096 	DATA 	Trial 1: Block=1, Type=GO, Arrow=2, Resp=0, ACC=-1, RT=0ms
+25.9246 	DATA 	Keypress: p
+25.9250 	DATA 	Trial 2: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=305ms
+28.5262 	DATA 	Keypress: p
+28.5272 	DATA 	Trial 3: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=406ms
+30.9151 	DATA 	Keypress: p
+30.9153 	DATA 	Trial 4: Block=1, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=82ms
+33.4447 	DATA 	Keypress: p
+33.4451 	DATA 	Trial 5: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=320ms
+35.9247 	DATA 	Keypress: p
+35.9251 	DATA 	Trial 6: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=300ms
+38.5147 	DATA 	Keypress: p
+38.5150 	DATA 	Trial 7: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=386ms
+40.9245 	DATA 	Keypress: p
+40.9247 	DATA 	Trial 8: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=290ms
+43.4146 	DATA 	Keypress: p
+43.4150 	DATA 	Trial 9: Block=1, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=122ms
+46.6439 	DATA 	No keypress (maxWait exceeded)
+46.6439 	DATA 	Trial 10: Block=1, Type=STOP, Arrow=2, Resp=0, ACC=3, RT=0ms
+59.9188 	DATA 	Keypress: space
+62.4687 	DATA 	Keypress: space
+66.3644 	DATA 	Keypress: p
+66.3647 	DATA 	Trial 11: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=337ms
+68.2200 	DATA 	Keypress: p
+68.9740 	DATA 	Keypress: p
+68.9742 	DATA 	Trial 12: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=445ms
+71.3248 	DATA 	Keypress: p
+71.3252 	DATA 	Trial 13: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=293ms
+73.8144 	DATA 	Keypress: p
+73.8146 	DATA 	Trial 14: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=277ms
+76.3042 	DATA 	Keypress: p
+76.3046 	DATA 	Trial 15: Block=2, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=111ms
+78.8239 	DATA 	Keypress: p
+78.8244 	DATA 	Trial 16: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=290ms
+81.3539 	DATA 	Keypress: p
+81.3541 	DATA 	Trial 17: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=311ms
+83.7943 	DATA 	Keypress: p
+83.7948 	DATA 	Trial 18: Block=2, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=146ms
+86.6944 	DATA 	Keypress: p
+86.6945 	DATA 	Trial 19: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=654ms
+88.8741 	DATA 	Keypress: p
+88.8744 	DATA 	Trial 20: Block=2, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=274ms
+105.0389 	DATA 	Keypress: space
+115.4820 	DATA 	Keypress: space
