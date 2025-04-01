@@ -17,6 +17,7 @@ def GenTrialSeq(settings):
     TotalBlocks = settings.TotalBlocks
     TotalTrials = settings.TotalTrials
     TrialsPerBlock = settings.TrialsPerBlock
+    arrowTypes = settings.arrowTypes
 
     ALLrstims = np.zeros(TotalTrials, dtype=int)
     ALLarrows = np.zeros(TotalTrials, dtype=int)
@@ -37,7 +38,7 @@ def GenTrialSeq(settings):
         rstims = generate_valid_rstims(TrialsPerBlock)
 
         # Generate arrow directions
-        arrows = generate_arrow_sequence(rstims)
+        arrows = generate_arrow_sequence(rstims, arrowTypes)
 
         # Fill into block-level arrays
         ALLrstims[block_start:block_end] = rstims
@@ -58,21 +59,42 @@ def GenTrialSeq(settings):
     return trialseq
 
 
-def generate_valid_rstims(n_trials):
-    """Generates a valid stop/go sequence with constraints."""
+def generate_valid_rstims(n_trials, stop_ratio=1/3, max_stop_run=4, min_go_start=3):
+    """
+    Generate a valid sequence of GO (0) and STOP (1) trials.
+
+    Args:
+        n_trials (int): Total number of trials.
+        stop_ratio (float): Proportion of stop trials (default = 1/3).
+        max_stop_run (int): Max number of stop trials allowed in any 5-trial window.
+        min_go_start (int): First N trials must be all GO trials.
+
+    Returns:
+        np.ndarray: Array of 0s (GO) and 1s (STOP), length == n_trials
+    """
+    n_stop = int(n_trials * stop_ratio)
+    n_go = n_trials - n_stop
+
     sflag = False
+    attempt = 0
     while not sflag:
-        rstims = np.repeat([0, 0, 1], n_trials // 3)
-        random.shuffle(rstims)
-        rstims = rstims[:n_trials]
+        attempt += 1
+        # Step 1: Create initial array with exact GO/STOP counts
+        trial_types = [0] * n_go + [1] * n_stop
+        random.shuffle(trial_types)
+        rstims = np.array(trial_types)
 
-        if any(rstims[:3]):  # first 3 trials can't be stop
+        # Step 2: Constraint 1 — First few trials must be GO
+        if np.any(rstims[:min_go_start]):
             continue
 
-        check = [sum(rstims[i:i+5]) for i in range(n_trials - 4)]
-        if max(check) >= 5:
+        # Step 3: Constraint 2 — Max number of stop trials in any sliding window
+        window_sums = [sum(rstims[i:i+5]) for i in range(n_trials - 4)]
+        if any(w > max_stop_run for w in window_sums):
             continue
-        sflag = True
+
+        sflag = True  # passed all checks
+
     return rstims
 
 
@@ -96,40 +118,3 @@ def generate_arrow_sequence(rstims, arrowTypes):
         arrows[idx] = arrows_go[i]
 
     return arrows
-
-def SetupSeed(settings, subdata, mode="indiv"):
-    """
-    Sets up random seed strategy for trial sequence generation.
-
-    Args:
-        settings (SimpleNamespace): Settings object to update.
-        subdata (list): Subject info, where subdata[0] is subject ID.
-        mode (str): Randomization mode.
-            - "random": no seed at all (fully random every time)
-            - "same": fixed seed shared by all participants
-            - "indiv": per-subject seed based on subject ID
-    """
-    if mode == "random":
-        settings.GeneralSeed = None
-        settings.blockSeed = None
-        print("[INFO] Trial sequence mode: fully random (no seed).")
-
-    else:
-        # Assign general seed based on mode
-        if mode == "same":
-            settings.GeneralSeed = 123
-            print("[INFO] Trial sequence mode: same for all participants.")
-        elif mode == "indiv":
-            settings.GeneralSeed = int(subdata[0])
-            print(f"[INFO] Trial sequence mode: individualized. Seed = {settings.GeneralSeed}")
-        else:
-            raise ValueError(f"Unknown mode: {mode}. Use 'random', 'same', or 'indiv'.")
-
-        # Apply global seed
-        random.seed(settings.GeneralSeed)
-        np.random.seed(settings.GeneralSeed)
-
-        # Generate per-block seeds for fine-grained control
-        settings.blockSeed = np.random.randint(0, 100000, size=settings.TotalBlocks)
-        print(f"[INFO] Per-block seeds: {settings.blockSeed}")
-    return settings

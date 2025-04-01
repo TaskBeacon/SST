@@ -3,6 +3,8 @@ from psychopy.hardware import keyboard
 from psychopy.visual import ShapeStim
 from types import SimpleNamespace
 from datetime import datetime
+from TaskFunc.SetupSeed import SetupSeed
+
 
 def Initialize(subdata):
     """
@@ -27,8 +29,8 @@ def Initialize(subdata):
 
     # Define settings
     settings = SimpleNamespace()
-    settings.TotalBlocks = 5
-    settings.TotalTrials = 300
+    settings.TotalBlocks = 2
+    settings.TotalTrials = 20
     settings.TrialsPerBlock = settings.TotalTrials // settings.TotalBlocks
 
     # random seed

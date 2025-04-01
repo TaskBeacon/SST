@@ -26,4 +26,7 @@ win.close()
 core.quit()
 
 # GenTrialSeq test
-settings = GenTrialSeq(subdata)
+trialSeq = GenTrialSeq(settings)
+RunTask(win, kb, settings, trialSeq, subdata)
+
+TerminateTask(win)
