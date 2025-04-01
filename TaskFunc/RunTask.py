@@ -1,8 +1,12 @@
-from psychopy import visual, event, core
+from psychopy import visual, event, core, logging
 import numpy as np
 from TaskFunc import CountDown
 
 def RunTask(win, kb, settings, trialseq, subdata):
+    log_filename = settings.outfile.replace('.csv', '.log')
+    logging.LogFile(log_filename, level=logging.DATA, filemode='a')
+    logging.console.setLevel(logging.INFO)
+    event.globalKeys.add(key='q', modifiers=['ctrl'], func=core.quit)
     # Prepare visual components
     fix = visual.TextStim(win, height=1, text="+", wrapWidth=10, color='black', pos=[0, 0])
     warning = visual.TextStim(win, text="TOO SLOW!!!", height=.6, wrapWidth=10, color='red', pos=[0, 0])
@@ -128,7 +132,7 @@ def RunTask(win, kb, settings, trialseq, subdata):
                     acc = 3 # successfully stopped
                     RT = 0
                     RightSSD += stairsize
-
+            
         # Convert key press to numerical code
         if resp and resp[0] == left_key:
             resp_code = 1
@@ -136,7 +140,8 @@ def RunTask(win, kb, settings, trialseq, subdata):
             resp_code = 2
         else:
             resp_code = 0
-
+        logging.data(f"Trial {i+1}: Block={trialseq.blocknum[i]}, Type={'GO' if trialseq.stop[i]==0 else 'STOP'}, "
+            f"Arrow={trialseq.arrows[i]}, Resp={resp_code}, ACC={acc}, RT={int(RT*1000)}ms")
         # Save data for this trial
         blockdata.RT = np.hstack((blockdata.RT, int(RT * 1000)))  # Convert to ms
         blockdata.arrow = np.hstack((blockdata.arrow, trialseq.arrows[i]))
@@ -171,6 +176,7 @@ def RunTask(win, kb, settings, trialseq, subdata):
             BlockFeedback.text += f"Mean GO RT : {meanGOrt:.2f} ms\n"
             BlockFeedback.text += f"Accuracy : {CorrectGO / GOtrials * 100:.2f} %\n"
             BlockFeedback.text += f"p(STOP) : {SuccesfulStop / STOPtrials * 100:.2f} %\n"
+            BlockFeedback.text += "Press SPACE to continue..."
 
             # Stack trial data into a single matrix
             temp = np.hstack([
@@ -197,7 +203,7 @@ def RunTask(win, kb, settings, trialseq, subdata):
                        footer=','.join(subdata))
 
             # Display block feedback (wait for key)
-            while not event.getKeys():
+            while not event.getKeys(keyList=['space']):
                 BlockFeedback.draw()
                 win.flip()
 
@@ -217,8 +223,9 @@ def RunTask(win, kb, settings, trialseq, subdata):
                     )
                 else:
                     PerformanceFeedback.text = "You're doing great!\nKeep it up!"
+                    PerformanceFeedback.text+= "Press SPACE to continue..."
 
-                while not event.getKeys():
+                while not event.getKeys(keyList=['space']):
                     PerformanceFeedback.draw()
                     win.flip()
 

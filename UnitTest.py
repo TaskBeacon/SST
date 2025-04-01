@@ -1,4 +1,3 @@
-
 from psychopy import visual, core
 from TaskFunc import *
 
@@ -28,5 +27,6 @@ core.quit()
 # GenTrialSeq test
 trialSeq = GenTrialSeq(settings)
 RunTask(win, kb, settings, trialSeq, subdata)
-
 TerminateTask(win)
+
+

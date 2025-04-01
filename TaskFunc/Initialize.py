@@ -39,7 +39,7 @@ def Initialize(subdata):
     # Arrow vertices
     LarrowVert = [(0.2,0.05),(0.2,-0.05),(0,-0.05),(0,-0.1),(-.2,0),(0,0.1),(0,0.05)]
     RarrowVert = [(-0.2,0.05),(-0.2,-0.05),(0,-0.05),(0,-0.1),(.2,0),(0,0.1),(0,0.05)]
-    UparrowVert = [(-0.05, -0.2), (0.05, -0.2), (0.05, 0), (0.1, 0), (0, 0.2), (-0.1, 0), (-0.05, 0)]  # Centered vertical arrow
+    UparrowVert = [(-0.05,-0.2),(0.05,-0.2),(0.05,0),(0.1,0),(0,0.2),(-0.1,0),(-0.05,0)]  # Centered vertical arrow
 
     # Arrow stimuli
     settings.Larrow = ShapeStim(win, vertices=LarrowVert, fillColor='black', size=8, lineColor=None)

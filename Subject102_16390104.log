@@ -1,0 +1,45 @@
+13.5098 	DATA 	Keypress: p
+13.5100 	DATA 	Trial 1: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=553ms
+15.9708 	DATA 	Keypress: p
+15.9711 	DATA 	Trial 2: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=510ms
+18.2597 	DATA 	Keypress: p
+18.2602 	DATA 	Trial 3: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=292ms
+21.4694 	DATA 	No keypress (maxWait exceeded)
+21.4694 	DATA 	Trial 4: Block=1, Type=STOP, Arrow=2, Resp=0, ACC=3, RT=0ms
+23.3794 	DATA 	Keypress: p
+23.3798 	DATA 	Trial 5: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=417ms
+25.9795 	DATA 	Keypress: p
+25.9800 	DATA 	Trial 6: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=510ms
+28.4197 	DATA 	Keypress: p
+28.4201 	DATA 	Trial 7: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=455ms
+31.1393 	DATA 	Keypress: p
+31.1395 	DATA 	Trial 8: Block=1, Type=GO, Arrow=2, Resp=2, ACC=1, RT=668ms
+33.9771 	DATA 	No keypress (maxWait exceeded)
+33.9771 	DATA 	Trial 9: Block=1, Type=STOP, Arrow=2, Resp=0, ACC=3, RT=0ms
+35.8297 	DATA 	Keypress: p
+35.8304 	DATA 	Trial 10: Block=1, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=51ms
+41.0453 	DATA 	Keypress: p
+42.3810 	DATA 	Keypress: p
+46.4297 	DATA 	Keypress: p
+46.4299 	DATA 	Trial 11: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=470ms
+48.7792 	DATA 	Keypress: p
+48.7795 	DATA 	Trial 12: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=320ms
+51.2498 	DATA 	Keypress: p
+51.2501 	DATA 	Trial 13: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=283ms
+54.1296 	DATA 	Keypress: p
+54.1300 	DATA 	Trial 14: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=668ms
+56.4000 	DATA 	Keypress: p
+56.4002 	DATA 	Trial 15: Block=2, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=177ms
+58.8195 	DATA 	Keypress: p
+58.8199 	DATA 	Trial 16: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=352ms
+61.3300 	DATA 	Keypress: p
+61.3307 	DATA 	Trial 17: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=358ms
+63.8392 	DATA 	Keypress: p
+63.8395 	DATA 	Trial 18: Block=2, Type=STOP, Arrow=2, Resp=2, ACC=4, RT=168ms
+66.5895 	DATA 	Keypress: p
+66.5898 	DATA 	Trial 19: Block=2, Type=GO, Arrow=2, Resp=2, ACC=1, RT=614ms
+69.4793 	DATA 	No keypress (maxWait exceeded)
+69.4793 	DATA 	Trial 20: Block=2, Type=STOP, Arrow=2, Resp=0, ACC=3, RT=0ms
+106.3787 	DATA 	Mouse: Left button down, pos=(1429,835)
+106.5115 	DATA 	Mouse:  Left button up, pos=(1429,835)
+107.8964 	DATA 	Keypress: p
