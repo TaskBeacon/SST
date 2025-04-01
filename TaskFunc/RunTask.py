@@ -223,7 +223,7 @@ def RunTask(win, kb, settings, trialseq, subdata):
                     )
                 else:
                     PerformanceFeedback.text = "You're doing great!\nKeep it up!"
-                    PerformanceFeedback.text+= "Press SPACE to continue..."
+                PerformanceFeedback.text+= "Press SPACE to continue..."
 
                 while not event.getKeys(keyList=['space']):
                     PerformanceFeedback.draw()
