@@ -1,2 +1,2 @@
 # SST
-Stop Signal Task
+This task is modified from  https://github.com/cheolsoh/SSTpsychopy
