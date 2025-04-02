@@ -1,8 +1,11 @@
-from SST import *
+from psyflow.screenflow import  *
+from SST.expsetup import exp_setup
+from SST.trialcontrol import generate_trial_seq
+from SST.expcontrol import exp_run
 # all
-subdata = SubjectInformation()
-win, kb, settings = Initialize(subdata)
-trialSeq = GenTrialSeq(settings)
+subdata = get_subject_info()
+win, kb, settings = exp_setup(subdata)
+trialSeq = generate_trial_seq(settings)
 print(trialSeq.stop)
 intro_test = (
         'You will perform a stop signal task. \n'
@@ -12,7 +15,7 @@ intro_test = (
         'Both fast responding and successful stopping are important. \n\n'
         'Press SPACE to continue.'
     )
-ShowInstructions(win,intro_text=intro_test)
-CountDown(win)
-RunTask(win, kb, settings, trialSeq, subdata)
-TerminateTask(win)
+show_instructions(win,intro_text=intro_test)
+show_realtime_countdown(win)
+exp_run(win, kb, settings, trialSeq, subdata)
+show_goodbye(win)

@@ -1,0 +1,18 @@
+[project]
+name = "sst"
+version = "0.1.0"
+description = "Stop-Signal Task implementation in PsychoPy"
+authors = [
+    { name="Zhipeng Cao", email="zhipeng30@foxmail.com" }
+]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = [
+    "psychopy",
+    "numpy"
+]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
