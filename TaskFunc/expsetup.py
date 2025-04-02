@@ -3,10 +3,9 @@ from psychopy.hardware import keyboard
 from psychopy.visual import ShapeStim
 from types import SimpleNamespace
 from datetime import datetime
-from TaskFunc.SetupSeed import SetupSeed
+from psyflow.seedcontrol import setup_seed_for_settings
 
-
-def Initialize(subdata):
+def exp_setup(subdata):
     """
     Initializes window, stimuli, experiment settings, and keyboard.
 
@@ -34,7 +33,7 @@ def Initialize(subdata):
     settings.TrialsPerBlock = settings.TotalTrials // settings.TotalBlocks
 
     # random seed
-    settings = SetupSeed(settings, subdata, mode="indiv") # each sub will have a unique seed
+    settings = setup_seed_for_settings(settings, subdata, mode="indiv") # each sub will have a unique seed
 
     # Arrow vertices
     LarrowVert = [(0.2,0.05),(0.2,-0.05),(0,-0.05),(0,-0.1),(-.2,0),(0,0.1),(0,0.05)]

@@ -1,4 +1,3 @@
-from .GenTrialSeq import GenTrialSeq
-from .RunTask import RunTask
-from .TerminateTask import TerminateTask
+from .trialcontrol import generate_trial_seq
+from .expcontrol import RunTask
 

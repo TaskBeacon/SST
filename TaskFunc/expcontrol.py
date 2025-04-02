@@ -1,8 +1,8 @@
 from psychopy import visual, event, core, logging
 import numpy as np
-from TaskFunc import CountDown
+from psyflow.screenflow import show_static_countdown
 
-def RunTask(win, kb, settings, trialseq, subdata):
+def exp_run(win, kb, settings, trialseq, subdata):
     log_filename = settings.outfile.replace('.csv', '.log')
     logging.LogFile(log_filename, level=logging.DATA, filemode='a')
     logging.console.setLevel(logging.INFO)
@@ -240,4 +240,4 @@ def RunTask(win, kb, settings, trialseq, subdata):
                 blockdata.blockNum = []
 
                 # Countdown before next block
-                CountDown(win)
+                show_static_countdown(win)

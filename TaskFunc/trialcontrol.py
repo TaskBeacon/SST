@@ -4,7 +4,7 @@ from types import SimpleNamespace
 import warnings
 
 
-def GenTrialSeq(settings):
+def generate_trial_seq(settings):
     """
     Generates trial sequence for stop-signal task.
 
