@@ -1,7 +1,7 @@
 from psyflow.screenflow import  *
-from SST.expsetup import exp_setup
-from SST.trialcontrol import generate_trial_seq
-from SST.expcontrol import exp_run
+from task.expsetup import exp_setup
+from task.trialcontrol import generate_trial_seq
+from task.expcontrol import exp_run
 # all
 subdata = get_subject_info()
 win, kb, settings = exp_setup(subdata)

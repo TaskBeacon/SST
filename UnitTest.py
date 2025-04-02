@@ -1,10 +1,8 @@
 from psychopy import visual, core
-
-
 from psyflow.screenflow import  *
-from SST.expsetup import exp_setup
-from SST.trialcontrol import generate_trial_seq
-from SST.expcontrol import exp_run
+from task.expsetup import exp_setup
+from task.trialcontrol import generate_trial_seq
+from task.expcontrol import exp_run
 
 # CountDown test
 win = visual.Window([1920, 1080], monitor="testMonitor", units="deg",
