@@ -3,7 +3,6 @@ import random
 from types import SimpleNamespace
 import warnings
 
-
 def generate_trial_seq(settings):
     """
     Generates trial sequence for stop-signal task.

@@ -1,4 +1,4 @@
-from TaskFunc import *
+from SST import *
 # all
 subdata = SubjectInformation()
 win, kb, settings = Initialize(subdata)

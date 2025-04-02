@@ -1,5 +1,5 @@
 from psychopy import visual, core
-from TaskFunc import *
+from SST import *
 
 # CountDown test
 win = visual.Window([1920, 1080], monitor="testMonitor", units="deg",
