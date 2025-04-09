@@ -4,7 +4,7 @@ from task.trialcontrol import generate_trial_seq
 from task.expcontrol import exp_run
 # all
 subdata = get_subject_info()
-win, kb, settings = exp_setup(subdata)
+win, kb, settings = exp_setup(subdata,useUpArrowStop=True, bg_color='gray')
 trialseq = generate_trial_seq(settings)
 print(trialseq.conditions)
 print(trialseq.stims)

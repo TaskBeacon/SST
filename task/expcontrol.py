@@ -1,12 +1,15 @@
 from psychopy import visual, event, core, logging
 import numpy as np
+import pandas as pd
 from psyflow.screenflow import show_static_countdown
 
 def exp_run(win, kb, settings, trialseq, subdata):
     log_filename = settings.outfile.replace('.csv', '.log')
     logging.LogFile(log_filename, level=logging.DATA, filemode='a')
     logging.console.setLevel(logging.INFO)
+    event.globalKeys.clear()
     event.globalKeys.add(key='q', modifiers=['ctrl'], func=core.quit)
+    event.Mouse(visible=False)  # hide mouse cursor
     # Prepare visual components
     fix = visual.TextStim(win, height=1, text="+", wrapWidth=10, color='black', pos=[0, 0])
     warning = visual.TextStim(win, text="TOO SLOW!!!", height=.6, wrapWidth=10, color='red', pos=[0, 0])
@@ -144,7 +147,7 @@ def exp_run(win, kb, settings, trialseq, subdata):
             f"Arrow={trialseq.stims[i]}, Resp={resp_code}, ACC={acc}, RT={int(RT*1000)}ms")
         # Save data for this trial
         blockdata.RT = np.hstack((blockdata.RT, int(RT * 1000)))  # Convert to ms
-        blockdata.arrow = np.hstack((blockdata.arrow, trialseq.stims[i]))
+        blockdata.arrow = np.hstack((blockdata.arrow, [trialseq.stims[i]]))
         blockdata.resp = np.hstack((blockdata.resp, resp_code))
         blockdata.blockNum = np.hstack((blockdata.blockNum, trialseq.blocknum[i]))
         blockdata.acc = np.hstack((blockdata.acc, acc))
@@ -179,16 +182,19 @@ def exp_run(win, kb, settings, trialseq, subdata):
             BlockFeedback.text += "Press SPACE to continue..."
 
             # Stack trial data into a single matrix
-            temp = np.hstack([
-                blockdata.blockNum.reshape(-1, 1),
-                abs(blockdata.GOidx - 1).reshape(-1, 1),
-                blockdata.arrow.reshape(-1, 1),
-                blockdata.resp.reshape(-1, 1),
-                blockdata.LeftSSD.reshape(-1, 1),
-                blockdata.RightSSD.reshape(-1, 1),
-                blockdata.acc.reshape(-1, 1),
-                blockdata.RT.reshape(-1, 1),
-            ])
+            blockdata_np = {
+                        "Block": np.array(blockdata.blockNum, dtype=object).reshape(-1, 1),
+                        "TrialType": np.array(['go' if v == 1 else 'stop' for v in blockdata.GOidx], dtype=object).reshape(-1, 1),
+                        "Arrow": np.array(blockdata.arrow, dtype=object).reshape(-1, 1),
+                        "Response": np.array(blockdata.resp, dtype=object).reshape(-1, 1),
+                        "leftSSD": np.array(blockdata.LeftSSD, dtype=object).reshape(-1, 1),
+                        "rightSSD": np.array(blockdata.RightSSD, dtype=object).reshape(-1, 1),
+                        "ResponseType": np.array([{1: 'correct', 0: 'wrong_key', -1: 'miss', 3: 'success_stop', 4: 'fail_stop'}.get(a, 'unknown')
+                                                    for a in blockdata.acc
+                                                ], dtype=object).reshape(-1, 1),
+                        "RT": np.array(blockdata.RT, dtype=object).reshape(-1, 1)}
+            
+            temp = np.hstack(list(blockdata_np.values()))
 
             # Save data to block-level matrix
             if trialseq.blocknum[i] == 1:
@@ -197,10 +203,10 @@ def exp_run(win, kb, settings, trialseq, subdata):
                 blockdata.DATA = np.vstack([blockdata.DATA, temp])
 
             # Save to CSV
-            np.savetxt(settings.outfile, blockdata.DATA,
-                       header="Block,TrialType,Arrow,Response,leftSSD,rightSSD,ACC,RT",
-                       fmt='%4i', delimiter=',',
-                       footer=','.join(subdata))
+            df = pd.DataFrame(blockdata.DATA, columns=["Block", "TrialType", "Arrow", "Response", "leftSSD", "rightSSD", "ResponseType", "RT"])
+            df.to_csv(settings.outfile, index=False)
+            with open(settings.outfile, 'a') as f:
+                f.write('\n' + ','.join(subdata))
 
             # Display block feedback (wait for key)
             while not event.getKeys(keyList=['space']):

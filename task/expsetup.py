@@ -5,73 +5,117 @@ from types import SimpleNamespace
 from datetime import datetime
 from psyflow.seedcontrol import setup_seed_for_settings
 
-def exp_setup(subdata):
+def exp_setup(
+    subdata,
+    left_key='q',
+    right_key='p',
+    win_size=(1920, 1080),
+    bg_color='white',
+    TotalBlocks=2,
+    TotalTrials=20,
+    twoArrows=False,
+    useUpArrowStop=False,
+    initSSD=200,
+    staircase=50,
+    arrowDuration=1.0,
+    trialDuration=3.0,
+    seed_mode='indiv',
+):
     """
-    Initializes window, stimuli, experiment settings, and keyboard.
+    Initializes the PsychoPy window, stimuli, experimental settings, and keyboard input handler.
 
-    Args:
-        subdata (list): Subject info including ID.
-    Returns:
-        win (visual.Window): The PsychoPy window object.
-        kb (keyboard.Keyboard): Keyboard input handler.
-        settings (SimpleNamespace): Experimental settings and stimuli.
+    Parameters
+    ----------
+    subdata : list
+        Subject information, with the first element typically being the subject ID.
+    left_key : str, optional
+        Response key for left-arrow trials. Ignored if `twoArrows` is False (default: 'q').
+    right_key : str, optional
+        Response key for right-arrow trials (default: 'p').
+    win_size : tuple of int, optional
+        Size of the experiment window in pixels (default: (1920, 1080)).
+    bg_color : str or tuple, optional
+        Background color of the window (default: 'white').
+    TotalBlocks : int, optional
+        Number of blocks in the experiment (default: 2).
+    TotalTrials : int, optional
+        Total number of trials in the experiment (default: 20).
+    twoArrows : bool, optional
+        Whether to include both 'left' and 'right' arrow stimuli (default: False).
+    useUpArrowStop : bool, optional
+        Whether to use ↑ as the stop signal (default: False).
+    initSSD : int, optional
+        Initial stop-signal delay in milliseconds (default: 200).
+    staircase : int, optional
+        Step size for adjusting SSD (default: 50).
+    arrowDuration : float, optional
+        Duration of arrow presentation in seconds (default: 1.0).
+    trialDuration : float, optional
+        Maximum duration of a trial in seconds (default: 3.0).
+    seed_mode : str, optional
+            One of 'random', 'same', or 'indiv'.
+
+    Returns
+    -------
+    win : visual.Window
+        The PsychoPy window object used for stimulus presentation.
+    kb : keyboard.Keyboard
+        PsychoPy keyboard object for collecting keypresses.
+    settings : SimpleNamespace
+        Object containing all experimental parameters and stimulus objects.
     """
     win = visual.Window(
-        size=[1920, 1080],
+        size=win_size,
         monitor="testMonitor",
         units="deg",
         screen=1,
-        color="white",
+        color=bg_color,
         fullscr=True,
-        gammaErrorPolicy='ignore'  # avoid gamma ramp errors
+        gammaErrorPolicy='ignore'
     )
 
     # Define settings
     settings = SimpleNamespace()
-    settings.TotalBlocks = 2
-    settings.TotalTrials = 20
-    settings.TrialsPerBlock = settings.TotalTrials // settings.TotalBlocks
+    settings.TotalBlocks = TotalBlocks
+    settings.TotalTrials = TotalTrials
+    settings.TrialsPerBlock = TotalTrials // TotalBlocks
 
-    # random seed
-    settings = setup_seed_for_settings(settings, subdata, mode="indiv") # each sub will have a unique seed
+    # Seed setup
+    settings = setup_seed_for_settings(settings, subdata, mode=seed_mode)
 
     # Arrow vertices
-    LarrowVert = [(0.2,0.05),(0.2,-0.05),(0,-0.05),(0,-0.1),(-.2,0),(0,0.1),(0,0.05)]
-    RarrowVert = [(-0.2,0.05),(-0.2,-0.05),(0,-0.05),(0,-0.1),(.2,0),(0,0.1),(0,0.05)]
-    UparrowVert = [(-0.05,-0.2),(0.05,-0.2),(0.05,0),(0.1,0),(0,0.2),(-0.1,0),(-0.05,0)]  # Centered vertical arrow
+    LarrowVert = [(0.2, 0.05), (0.2, -0.05), (0, -0.05), (0, -0.1), (-.2, 0), (0, 0.1), (0, 0.05)]
+    RarrowVert = [(-0.2, 0.05), (-0.2, -0.05), (0, -0.05), (0, -0.1), (.2, 0), (0, 0.1), (0, 0.05)]
+    UparrowVert = [(-0.05, -0.2), (0.05, -0.2), (0.05, 0), (0.1, 0), (0, 0.2), (-0.1, 0), (-0.05, 0)]
 
-    # Arrow stimuli
+    # Stimuli
     settings.Larrow = ShapeStim(win, vertices=LarrowVert, fillColor='black', size=8, lineColor=None)
     settings.Rarrow = ShapeStim(win, vertices=RarrowVert, fillColor='black', size=8, lineColor=None)
     settings.LarrowSTOP = ShapeStim(win, vertices=LarrowVert, fillColor='red', size=8, lineColor=None)
     settings.RarrowSTOP = ShapeStim(win, vertices=RarrowVert, fillColor='red', size=8, lineColor=None)
     settings.UparrowSTOP = ShapeStim(win, vertices=UparrowVert, fillColor='black', size=8, lineColor=None)
-    
-    settings.twoArrows = False  # set True to enable both arrows
-    if settings.twoArrows:
-        settings.arrowTypes = ['left', 'right']  # 1 = left, 2 = right
-    else:
-        settings.arrowTypes = ['right']     # only right arrow
-    
-    # set stop type: 
-    settings.useUpArrowStop = False  # if True, show ↑ instead of red ←/→ for stop signal
-    
 
-    # Timing and staircase
-    settings.initSSD = 200
-    settings.staircase = 50
-    settings.arrowDuration = 1
-    settings.trialDuration = 3
+    # Arrow types
+    settings.twoArrows = twoArrows
+    settings.useUpArrowStop = useUpArrowStop
+    settings.arrowTypes = ['left', 'right'] if twoArrows else ['right']
 
-    # Keyboard settings
-    settings.left_key = 'q'
-    settings.right_key = 'p'
-    settings.keyList = [settings.left_key, settings.right_key]
-    
-    # File naming
+    # Key settings
+    settings.left_key = left_key
+    settings.right_key = right_key
+    settings.keyList = [left_key, right_key] if twoArrows else [right_key]
+
+    # Timing and staircase settings
+    settings.initSSD = initSSD
+    settings.staircase = staircase
+    settings.arrowDuration = arrowDuration
+    settings.trialDuration = trialDuration
+
+    # Output file naming
     dt_string = datetime.now().strftime("%H%M%d%m")
     settings.outfile = f"Subject{subdata[0]}_{dt_string}.csv"
 
+    # Keyboard
     kb = keyboard.Keyboard()
 
     return win, kb, settings
