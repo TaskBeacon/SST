@@ -49,9 +49,9 @@ def exp_setup(subdata):
     
     settings.twoArrows = False  # set True to enable both arrows
     if settings.twoArrows:
-        settings.arrowTypes = [1, 2]  # 1 = left, 2 = right
+        settings.arrowTypes = ['left', 'right']  # 1 = left, 2 = right
     else:
-        settings.arrowTypes = [2]     # only right arrow
+        settings.arrowTypes = ['right']     # only right arrow
     
     # set stop type: 
     settings.useUpArrowStop = False  # if True, show ↑ instead of red ←/→ for stop signal

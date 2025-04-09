@@ -133,11 +133,11 @@ def exp_run(win, kb, settings, trialseq, subdata):
                     RT = 0
                     RightSSD += stairsize
             
-        # Convert key press to numerical code
+        # save resp_code
         if resp and resp[0] == left_key:
-            resp_code = 1
+            resp_code = left_key
         elif resp and resp[0] == right_key:
-            resp_code = 2
+            resp_code = right_key
         else:
             resp_code = 0
         logging.data(f"Trial {i+1}: Block={trialseq.blocknum[i]}, Type={'GO' if trialseq.conditions[i]=='go' else 'STOP'}, "

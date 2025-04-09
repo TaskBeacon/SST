@@ -7,6 +7,7 @@ subdata = get_subject_info()
 win, kb, settings = exp_setup(subdata)
 trialseq = generate_trial_seq(settings)
 print(trialseq.conditions)
+print(trialseq.stims)
 intro_test = (
         'You will perform a stop signal task. \n'
         'Press "q" for left arrow and "p" for right arrow as fast as possible! \n'
