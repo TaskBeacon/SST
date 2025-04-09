@@ -5,8 +5,8 @@ from task.expcontrol import exp_run
 # all
 subdata = get_subject_info()
 win, kb, settings = exp_setup(subdata)
-trialSeq = generate_trial_seq(settings)
-print(trialSeq.stop)
+trialseq = generate_trial_seq(settings)
+print(trialseq.conditions)
 intro_test = (
         'You will perform a stop signal task. \n'
         'Press "q" for left arrow and "p" for right arrow as fast as possible! \n'
@@ -17,5 +17,5 @@ intro_test = (
     )
 show_instructions(win,intro_text=intro_test)
 show_realtime_countdown(win)
-exp_run(win, kb, settings, trialSeq, subdata)
+exp_run(win, kb, settings, trialseq, subdata)
 show_goodbye(win)

@@ -36,22 +36,22 @@ def exp_run(win, kb, settings, trialseq, subdata):
     blockdata.blockNum = []   # Block number
 
     # Loop through all trials
-    for i in range(len(trialseq.stop)):
+    for i in range(len(trialseq.conditions)):
         kb.clock.reset()
         kb.clearEvents()
         StopSignal = []
 
         # Choose stimulus type for this trial
-        if trialseq.arrows[i] == 1:  # left arrow
+        if trialseq.stims[i] == 'left':  # left arrow
             arrow = settings.Larrow
-            if trialseq.stop[i] == 1:
+            if trialseq.conditions[i] == 'stop':
                 if settings.useUpArrowStop:
                     StopSignal = settings.UparrowSTOP
                 else:
                     StopSignal = settings.LarrowSTOP
         else:  # right arrow
             arrow = settings.Rarrow
-            if trialseq.stop[i] == 1:
+            if trialseq.conditions[i] == 'stop':
                 if settings.useUpArrowStop:
                     StopSignal = settings.UparrowSTOP
                 else:
@@ -72,7 +72,7 @@ def exp_run(win, kb, settings, trialseq, subdata):
         # -------------------------
         # ▶️ Go Trial
         # -------------------------
-        if trialseq.stop[i] == 0:
+        if trialseq.conditions[i] == 'go':
             blockdata.GOidx = np.hstack((blockdata.GOidx, 1))  # Mark as Go trial
             event.clearEvents()
             resp = event.waitKeys(maxWait=settings.arrowDuration, keyList=keyList)
@@ -80,9 +80,9 @@ def exp_run(win, kb, settings, trialseq, subdata):
             if resp:  # A response was made
                 RT = core.getTime() - arrow_onset
                 key = resp[0]
-                if trialseq.arrows[i] == 1 and key == left_key:
+                if trialseq.stims[i] == 'left' and key == left_key:
                     acc = 1  # correct
-                elif trialseq.arrows[i] == 2 and key == right_key:
+                elif trialseq.stims[i] == 'right' and key == right_key:
                     acc = 1  # correct
                 else:
                     acc = 0  # wrong key
@@ -101,7 +101,7 @@ def exp_run(win, kb, settings, trialseq, subdata):
             event.clearEvents()
 
             # Wait for SSD (delay before showing StopSignal)
-            if trialseq.arrows[i] == 1:
+            if trialseq.stims[i] == 'left':
                 core.wait(LeftSSD / 1000)
             else:
                 core.wait(RightSSD / 1000)
@@ -112,7 +112,7 @@ def exp_run(win, kb, settings, trialseq, subdata):
             arrow_onset = core.getTime()
 
             # Wait for remaining response time
-            if trialseq.arrows[i] == 1: # left arrow
+            if trialseq.stims[i] == 'left': # left arrow
                 resp = event.waitKeys(maxWait=settings.arrowDuration - LeftSSD / 1000, keyList=keyList)
                 if resp:
                     acc = 4  # failed to stop
@@ -140,11 +140,11 @@ def exp_run(win, kb, settings, trialseq, subdata):
             resp_code = 2
         else:
             resp_code = 0
-        logging.data(f"Trial {i+1}: Block={trialseq.blocknum[i]}, Type={'GO' if trialseq.stop[i]==0 else 'STOP'}, "
-            f"Arrow={trialseq.arrows[i]}, Resp={resp_code}, ACC={acc}, RT={int(RT*1000)}ms")
+        logging.data(f"Trial {i+1}: Block={trialseq.blocknum[i]}, Type={'GO' if trialseq.conditions[i]=='go' else 'STOP'}, "
+            f"Arrow={trialseq.stims[i]}, Resp={resp_code}, ACC={acc}, RT={int(RT*1000)}ms")
         # Save data for this trial
         blockdata.RT = np.hstack((blockdata.RT, int(RT * 1000)))  # Convert to ms
-        blockdata.arrow = np.hstack((blockdata.arrow, trialseq.arrows[i]))
+        blockdata.arrow = np.hstack((blockdata.arrow, trialseq.stims[i]))
         blockdata.resp = np.hstack((blockdata.resp, resp_code))
         blockdata.blockNum = np.hstack((blockdata.blockNum, trialseq.blocknum[i]))
         blockdata.acc = np.hstack((blockdata.acc, acc))
