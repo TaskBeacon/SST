@@ -19,7 +19,7 @@ def exp_setup(
     staircase=50,
     arrowDuration=1.0,
     trialDuration=3.0,
-    seed_mode='indiv',
+    seed_mode='same',
 ):
     """
     Initializes the PsychoPy window, stimuli, experimental settings, and keyboard input handler.
