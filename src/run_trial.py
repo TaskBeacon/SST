@@ -1,6 +1,6 @@
 from functools import partial
 from psyflow import TrialUnit
-from .controller import Controller  # your simple 1-up/1-down SSTControllerSimple
+from .utils import Controller  # your simple 1-up/1-down SSTControllerSimple
 
 def run_trial(
     win,
@@ -54,7 +54,15 @@ def run_trial(
                 terminate_on_response=True
             )
         go_unit.to_dict(trial_data)
-
+        resp = go_unit.get_state('key_press', False)
+        if resp: 
+            make_unit(unit_label='no_response_feedback') \
+            .add_stim(stim_bank.get('no_response_feedback')) \
+            .show(
+                duration=settings.no_response_feedback_duration,  #
+                onset_trigger=trigger_bank.get('no_response_feedback_onset')  # add trigger for no response
+            ) \
+            .to_dict(trial_data)
 
 
     # 3) Stop trial branch

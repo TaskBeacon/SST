@@ -108,10 +108,11 @@ stimuli:
     fillColor: red
     size: 8
     lineColor: ''
-  blank:
+
+  no_response_feedback  :
     type: text
-    text: ''
-    color: gray
+    text: "No response"
+    color: white
   
   block_break:
     type: text
@@ -132,11 +133,18 @@ stimuli:
   instruction_text:
     type: text
     text: |
-      In this task, you will see a series of cues and targets. 
-      Your task is to respond to the cues as quickly as possible. 
-      If you respond to a cue, you will earn 10 points. 
-      If you do not respond to a cue, you will earn 0 points. 
-      Press space to continue.
+      In this task, you will see arrows pointing either left or right.
+      Your goal is to respond **as quickly and accurately as possible**:
+        - Press the LEFT arrow key for a left-pointing arrow.
+        - Press the RIGHT arrow key for a right-pointing arrow.
+      
+      However, on some trials, a **STOP signal** will appear shortly after the arrow.
+      When you see the STOP signal, try your best to **withhold your response**.
+
+      Respond quickly when there's no stop signal.
+      Try not to press anything when a stop signal appears.
+
+      Press SPACE to begin.
     color: white
 
 
@@ -151,6 +159,7 @@ stimuli:
 timing:
   fixation_duration: [0.5, 0.8]
   go_duration: 1.0        # how long the arrow is on screen (seconds)
+  no_response_feedback_duration: 0.5
 
 # === Triggers ===
 triggers:
@@ -168,6 +177,8 @@ triggers:
   pre_stop_response: 23
   on_stop_response: 24
   post_stop_response: 25
+
+  no_response_feedback_onset: 30
 
 
 # === Controller ===
