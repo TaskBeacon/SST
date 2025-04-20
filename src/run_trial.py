@@ -55,7 +55,7 @@ def run_trial(
             )
         go_unit.to_dict(trial_data)
         resp = go_unit.get_state('key_press', False)
-        if resp: 
+        if not resp: 
             make_unit(unit_label='no_response_feedback') \
             .add_stim(stim_bank.get('no_response_feedback')) \
             .show(
