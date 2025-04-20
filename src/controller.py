@@ -1,103 +1,96 @@
+# sst_controller.py
 
 from typing import Dict, List, Optional
 from psychopy import logging
 
-
 class Controller:
     """
-    AdaptiveController dynamically adjusts stimulus duration based on participant performance,
-    aiming to maintain a target accuracy rate (e.g., 66%).
-
-    It supports both general (pooled) or condition-specific tracking,
-    and is suitable for use across multiple blocks of trials.
+    Controller dynamically adjusts the stop‐signal delay (ssd) based on stop‐trial performance,
+    aiming to hit a specified stop‐success rate (defaults to 50%).
     """
 
     def __init__(
         self,
-        initial_duration: float = 0.25,
-        min_duration: float = 0.1,
-        max_duration: float = 0.4,
-        step: float = 0.02,
-        target_accuracy: float = 0.66,
-        condition_specific: bool = True,
+        initial_ssd: float = 0.25,
+        min_ssd: float = 0.05,
+        max_ssd: float = 0.5,
+        step: float = 0.05,
+        target_success: float = 0.5,
+        condition_specific: bool = False,
         enable_logging: bool = True
     ):
-        self.initial_duration = initial_duration
-        self.min_duration = min_duration
-        self.max_duration = max_duration
-        self.step = step
-        self.target_accuracy = target_accuracy
+        self.initial_ssd    = initial_ssd
+        self.min_ssd        = min_ssd
+        self.max_ssd        = max_ssd
+        self.step           = step
+        self.target_success = target_success
         self.condition_specific = condition_specific
         self.enable_logging = enable_logging
 
-        self.durations: Dict[Optional[str], float] = {}
-        self.histories: Dict[Optional[str], List[bool]] = {}
+        # keyed by stim ('left'/'right') or None if pooling
+        self.ssds      : Dict[Optional[str], float] = {}
+        self.histories : Dict[Optional[str], List[bool]] = {}
 
     @classmethod
-    def from_dict(cls, config: dict) -> 'Controller':
-        """
-        Create an AdaptiveController instance from a flattened config dictionary.
-
-        - Missing keys are filled with defaults.
-        - Raises an error if unsupported keys are included.
-        """
-        allowed_keys = {
-            'initial_duration': 0.25,
-            'min_duration': 0.1,
-            'max_duration': 0.4,
-            'step': 0.02,
-            'target_accuracy': 0.66,
-            'condition_specific': True,
-            'enable_logging': True
+    def from_dict(cls, config: dict) -> "Controller":
+        allowed = {
+            "initial_ssd": 0.25,
+            "min_ssd":     0.05,
+            "max_ssd":     0.5,
+            "step":        0.05,
+            "target_success": 0.5,
+            "condition_specific": False,
+            "enable_logging": True
         }
+        extra = set(config) - set(allowed)
+        if extra:
+            raise ValueError(f"[Controller] Unsupported keys: {extra}")
+        params = {k: config.get(k, default) for k, default in allowed.items()}
+        return cls(**params)
 
-        # Check for unsupported keys
-        extra_keys = set(config.keys()) - set(allowed_keys)
-        if extra_keys:
-            raise ValueError(f"[AdaptiveController] Unsupported config keys: {extra_keys}")
+    def _key(self, stim: Optional[str]) -> Optional[str]:
+        return stim if self.condition_specific else None
 
-        # Fill in config with defaults
-        final_config = {k: config.get(k, default) for k, default in allowed_keys.items()}
+    def get_ssd(self, stim: Optional[str] = None) -> float:
+        key = self._key(stim)
+        if key not in self.ssds:
+            self.ssds[key] = self.initial_ssd
+            self.histories[key] = []
+        return self.ssds[key]
 
-        return cls(**final_config)
-
-    def _get_key(self, condition: Optional[str]) -> Optional[str]:
-        return condition if self.condition_specific else None
-
-    def update(self, hit: bool, condition: Optional[str] = None):
-        key = self._get_key(condition)
-
-        if key not in self.durations:
-            self.durations[key] = self.initial_duration
+    def update(self, success: bool, stim: Optional[str] = None):
+        """
+        Call after each stop trial.
+        `success=True` means the subject successfully stopped (no response).
+        """
+        key = self._key(stim)
+        if key not in self.ssds:
+            # initialize on first use
+            self.ssds[key] = self.initial_ssd
             self.histories[key] = []
 
-        self.histories[key].append(bool(hit))
-        acc = sum(self.histories[key]) / len(self.histories[key])
+        self.histories[key].append(success)
+        rate = sum(self.histories[key]) / len(self.histories[key])
+        old = self.ssds[key]
 
-        old_duration = self.durations[key]
-        if acc > self.target_accuracy:
-            new_duration = max(self.min_duration, old_duration - self.step)
+        if rate > self.target_success:
+            new = min(self.max_ssd, old + self.step)
         else:
-            new_duration = min(self.max_duration, old_duration + self.step)
+            new = max(self.min_ssd, old - self.step)
 
-        self.durations[key] = new_duration
+        self.ssds[key] = new
 
         if self.enable_logging:
-            label = f"[{condition}]" if condition else ""
-            logging.data(f"[Controller📢]Adaptive{label} — Trials: {len(self.histories[key])}, "
-                         f"[Controller📢]Accuracy: {acc:.2%}, Duration updated: {old_duration:.3f} → {new_duration:.3f}")
-
-    def get_duration(self, condition: Optional[str] = None) -> float:
-        key = self._get_key(condition)
-        if key not in self.durations:
-            self.durations[key] = self.initial_duration
-            self.histories[key] = []
-        return self.durations[key]
-
+            label = f"[{stim}]" if stim else ""
+            logging.data(
+                f"[Controller]{label} Trials:{len(self.histories[key])} "
+                f"Success:{rate:.0%} ssd:{old:.3f}→{new:.3f}"
+            )
 
     def describe(self):
-        print("Adaptive Controller Status")
-        for key, history in self.histories.items():
-            label = f"[{key}]" if key else "[All]"
-            acc = sum(history) / len(history)
-            print(f"{label} — Accuracy: {acc:.2%} ({len(history)} trials), Duration: {self.durations[key]:.3f}")
+        print("=== SST Controller Status ===")
+        for k, hist in self.histories.items():
+            label = f"[{k}]" if k else "[all]"
+            rate = sum(hist)/len(hist)
+            ssd = self.ssds[k]
+            print(f"{label} success {rate:.2%} over {len(hist)} trials → ssd {ssd:.3f}s")

@@ -42,7 +42,7 @@ task:
   total_blocks: 2
   total_trials: 10
   trial_per_block: 5
-  conditions: [win, lose, neut]
+  conditions: [go, stop]
   key_list: [down]
   seed_mode: "same_across_sub"
 
@@ -53,7 +53,15 @@ stimuli:
     type: text
     text: "+"
     color: white
+  go:
+    type: text
+    text: "v"
+    color: white
 
+  stop:
+    type: text
+    text: "^"
+    color: white
   
   block_break:
     type: text
@@ -91,10 +99,10 @@ stimuli:
 
 # === Timing & Adaptivity ===
 timing:
-  fixation_duration: [0.8, 1.0]
- 
+  fixation_duration: [0.5, 0.8]
+  go_duration: 1.0        # how long the arrow is on screen (seconds)
 
-
+# === Triggers ===
 triggers:
   exp_onset: 98
   exp_end: 99
@@ -104,4 +112,16 @@ triggers:
 
   fixation_onset: 1
 
+  go_onset: 10
+  go_response: 11
+  go_miss: 12
+  stop_failed: 20
+
+# === Controller ===
+controller:
+  initial_ssd: 0.25             # initial stop‐signal delay (in seconds)
+  step: 0.05            # staircase step size (in whatever units you define)
+  min_ssd: 0.05
+  max_ssd: 0.5
+  target_success: 0.5  # 1-up 1-down
 

@@ -71,21 +71,16 @@ stim_config={
 }
 stim_bank.add_from_dict(stim_config)
 stim_bank.preload_all()
-stim_bank.preview_selected(['instruction_image2'])
-
-stim_map = stim_bank.get_selected([
-    "cue_win", "cue_lose", "cue_neut",
-    "target_win", "target_lose", "target_neut"
-])
+# stim_bank.preview_all()
 
 
 # 6. Setup trigger
 trigger_config = {
     **config.get('triggers', {})
 }
-triggerbank = TriggerBank(trigger_config)
+trigger_bank = TriggerBank(trigger_config)
 ser = serial.serial_for_url("loop://", baudrate=115200, timeout=1)
-triggersender = TriggerSender(
+trigger_sender = TriggerSender(
     trigger_func=lambda code: ser.write([1, 225, 1, 0, (code)]),
     post_delay=0,
     on_trigger_start=lambda: ser.open() if not ser.is_open else None,
@@ -107,32 +102,27 @@ for block_i in range(settings.total_blocks):
         block_id=f"block_{block_i}",
         block_idx=block_i,
         settings=settings,
-        stim_map=stim_map,  # assumes keys like 'cue_win', etc.
         window=win,
         keyboard=keyboard
     )
 
-    assign_cue_target = partial(assign_stimuli, components=["cue", "target"])
-    block.generate_stim_sequence(
-        generate_func=generate_balanced_conditions,
-        assign_func=assign_cue_target
-    )
+    block.generate_conditions(func=generate_balanced_conditions)
 
     @block.on_start
     def _block_start(b):
         print("Block start {}".format(b.block_idx))
         # b.logging_block_info()
-        triggersender.send(triggerbank.get("block_onset"))
+        trigger_sender.send(trigger_bank.get("block_onset"))
     @block.on_end
     def _block_end(b):     
         print("Block end {}".format(b.block_idx))
-        triggersender.send(triggerbank.get("block_end"))
+        trigger_sender.send(trigger_bank.get("block_end"))
         print(b.summarize())
         # print(b.describe())
     
     # 9. run block
     block.run_trial(
-        partial(run_trial, stim_bank=stim_bank, controller=controller, triggersender=triggersender, triggerbank=triggerbank)
+        partial(run_trial, stim_bank=stim_bank, controller=controller, trigger_sender=trigger_sender, trigger_bank=trigger_bank)
     )
     
     block.to_dict(all_data)
