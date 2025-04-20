@@ -42,8 +42,8 @@ task:
   total_blocks: 2
   total_trials: 10
   trial_per_block: 5
-  conditions: [go, stop]
-  key_list: [down]
+  conditions: [go_left, go_right, stop_left, stop_right]
+  key_list: [left, right]
   seed_mode: "same_across_sub"
 
 
@@ -53,15 +53,65 @@ stimuli:
     type: text
     text: "+"
     color: white
-  go:
-    type: text
-    text: "v"
-    color: white
+  go_left:
+    type: shape
+    vertices:
+      - [ 0.20,  0.05]
+      - [ 0.20, -0.05]
+      - [ 0.00, -0.05]
+      - [ 0.00, -0.10]
+      - [-0.20,  0.00]
+      - [ 0.00,  0.10]
+      - [ 0.00,  0.05]
+    fillColor: white
+    size: 8
+    lineColor: ''
 
-  stop:
+  go_right:
+    type: shape
+    vertices:
+      - [-0.20,  0.05]
+      - [-0.20, -0.05]
+      - [ 0.00, -0.05]
+      - [ 0.00, -0.10]
+      - [ 0.20,  0.00]
+      - [ 0.00,  0.10]
+      - [ 0.00,  0.05]
+    fillColor: white
+    size: 8
+    lineColor: ''
+
+  stop_left:
+    type: shape
+    vertices:
+      - [ 0.20,  0.05]
+      - [ 0.20, -0.05]
+      - [ 0.00, -0.05]
+      - [ 0.00, -0.10]
+      - [-0.20,  0.00]
+      - [ 0.00,  0.10]
+      - [ 0.00,  0.05]
+    fillColor: red
+    size: 8
+    lineColor: ''
+
+  stop_right:
+    type: shape
+    vertices:
+      - [-0.20,  0.05]
+      - [-0.20, -0.05]
+      - [ 0.00, -0.05]
+      - [ 0.00, -0.10]
+      - [ 0.20,  0.00]
+      - [ 0.00,  0.10]
+      - [ 0.00,  0.05]
+    fillColor: red
+    size: 8
+    lineColor: ''
+  blank:
     type: text
-    text: "^"
-    color: white
+    text: ''
+    color: gray
   
   block_break:
     type: text
@@ -115,7 +165,10 @@ triggers:
   go_onset: 10
   go_response: 11
   go_miss: 12
-  stop_failed: 20
+  pre_stop_response: 23
+  on_stop_response: 24
+  post_stop_response: 25
+
 
 # === Controller ===
 controller:

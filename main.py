@@ -5,7 +5,7 @@ from psyflow import BlockUnit
 from psyflow import TrialUnit
 from psyflow import TriggerSender
 from psyflow import TriggerBank
-from psyflow import generate_balanced_conditions, assign_stimuli
+
 
 from psychopy.visual import Window
 from psychopy.hardware import keyboard
@@ -16,7 +16,7 @@ import yaml
 import sys
 import serial
 
-from src import run_trial,Controller
+from src import run_trial,Controller, generate_valid_conditions
 
 
 
@@ -106,7 +106,7 @@ for block_i in range(settings.total_blocks):
         keyboard=keyboard
     )
 
-    block.generate_conditions(func=generate_balanced_conditions)
+    block.generate_conditions(func=generate_valid_conditions)
 
     @block.on_start
     def _block_start(b):
