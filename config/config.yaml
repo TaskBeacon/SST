@@ -40,8 +40,8 @@ window:
 # === Task-level settings ===
 task:
   total_blocks: 2
-  total_trials: 10
-  trial_per_block: 5
+  total_trials: 260
+  trial_per_block: 130
   conditions: [go_left, go_right, stop_left, stop_right]
   key_list: [left, right]
   seed_mode: "same_across_sub"
