@@ -19,13 +19,15 @@ subinfo_fields:
     choices: [Male, Female]
 
 subinfo_mapping:
-    subject_id: "Subject ID (three digits)"
-    session_name: "Session Name"
-    experimenter: "Experimenter"
-    gender: "Gender"
-    registration_failed: "Registration failed."
-    registration_successful: "Registration successful！"
-    invalid_input: "Field {field} input is invalid."
+    subject_id: "被试号"
+    session_name: "Session名称(Practice/Experiment)"
+    experimenter: "主试姓名或缩写"
+    gender: "性别"
+    Male: "男"
+    Female: "女"
+    registration_failed: "注册失败。"
+    registration_successful: "注册成功！"
+    invalid_input: "字段 {field} 输入无效。"
 
 
 # === Window settings ===

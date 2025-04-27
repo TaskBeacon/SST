@@ -50,6 +50,7 @@ settings.add_subinfo(subject_data)
 
 
 
+
 # 4. Set up window & input
 win = Window(size=settings.size, fullscr=settings.fullscreen, screen=1,
              monitor=settings.monitor, units=settings.units, color=settings.bg_color,
@@ -60,7 +61,7 @@ logging.LogFile(settings.log_file, level=logging.DATA, filemode='a')
 logging.console.setLevel(logging.INFO)
 settings.frame_time_seconds =win.monitorFramePeriod
 settings.win_fps = win.getActualFrameRate()
-settings.save_path = './data'
+
 
 # 5. Setup stimulus bank
 stim_bank = StimBank(win)
