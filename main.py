@@ -5,6 +5,7 @@ from psyflow import BlockUnit
 from psyflow import StimUnit
 from psyflow import TriggerSender
 from psyflow import TriggerBank
+from psyflow import count_down
 
 
 from psychopy.visual import Window
@@ -95,6 +96,7 @@ controller_config = {
 controller = Controller.from_dict(controller_config)
 
 StimUnit(win, 'instruction_text').add_stim(stim_bank.get('instruction_text')).wait_and_continue()
+count_down(win, 3, color='white')
 all_data = []
 for block_i in range(settings.total_blocks):
     # 8. setup block
@@ -151,6 +153,8 @@ for block_i in range(settings.total_blocks):
                                                              total_blocks=settings.total_blocks,
                                                              go_accuracy=go_hit_rate,
                                                              stop_accuracy=stop_success_rate)).wait_and_continue()
+    if block_i+1 < settings.total_blocks:
+        count_down(win, 3, color='white')
     if block_i+1 == settings.total_blocks:
         StimUnit(win, 'block').add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
     
