@@ -47,7 +47,7 @@ task:
   seed_mode: "same_across_sub"
 
 
-# === Stimuli (for MID task) ===
+# === Stimuli (for SST task) ===
 stimuli:
   fixation:
     type: text
@@ -113,53 +113,67 @@ stimuli:
     type: text
     text: "No response"
     color: white
-  
-  block_break:
-    type: text
-    text: |
-      Take a break! 
-      When you are ready, press space to continue.
-    color: white
 
-  block_feedback:
-    type: text
+
+  block_break:
+    type: textbox
     text: |
-      Block {block_num} of {total_blocks} completed. 
-      Accuaracy: {accuracy:.2f}
-      Reward: {reward:.2f}
-      Press space to continue.
+      【休息提示】
+
+      第 {block_num} / {total_blocks} 部分完成。
+      正确率：{go_accuracy:.2f}
+      停止正确率：{stop_accuracy:.2f}
+
+      请在充分休息后按【空格键】进入下一部分。
     color: white
+    font: SimHei
+    alignment: center
+    letterHeight: 0.78
 
   instruction_text:
-    type: text
+    type: textbox
     text: |
-      In this task, you will see arrows pointing either left or right.
-      Your goal is to respond **as quickly and accurately as possible**:
-        - Press the LEFT arrow key for a left-pointing arrow.
-        - Press the RIGHT arrow key for a right-pointing arrow.
-      
-      However, on some trials, a **STOP signal** will appear shortly after the arrow.
-      When you see the STOP signal, try your best to **withhold your response**.
+      【任务说明】
 
-      Respond quickly when there's no stop signal.
-      Try not to press anything when a stop signal appears.
+      在本任务中，您将看到箭头指向左或右。
+      您的目标是**尽快且准确地**做出反应：
+        - 如果箭头指向左，请按【左方向键】。
+        - 如果箭头指向右，请按【右方向键】。
 
-      Press SPACE to begin.
+      但是，在某些试次中，箭头出现后不久会出现一个**红色箭头**。
+      当看到红色箭头时，请尽力**抑制您的反应**，不要按任何按键。
+
+      在没有红色箭头出现时，请快速做出反应。
+      出现红色箭头时，请尽量不做出任何按键反应。
+
+      准备好后，请按【空格键】开始任务。
     color: white
+    font: SimHei
+    alignment: center
+    letterHeight: 0.78
 
+  iti_stim:
+    type: text
+    text: ""
 
   good_bye:
-    type: text
+    type: textbox
     text: |
-      Thank you for participating!
-      Press space to exit.
+      任务结束
+      
+      感谢您的参与
+      请按【空格键】键退出
     color: white
+    font: SimHei
+    alignment: center
+    letterHeight: 0.78
 
 # === Timing & Adaptivity ===
 timing:
   fixation_duration: [0.5, 0.8]
   go_duration: 1.0        # how long the arrow is on screen (seconds)
   no_response_feedback_duration: 0.5
+  iti_duration: [0.5, 0.8] # inter-trial interval (seconds)
 
 # === Triggers ===
 triggers:

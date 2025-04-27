@@ -103,4 +103,7 @@ def run_trial(
         # 3d) Update ssd staircase (+/- settings.staircase)
         controller.update(success=not failed_stop)
 
+        make_unit(unit_label = 'iti').add_stim(stim_bank.get("iti_stim")) \
+        .show(duration=settings.iti_duration)
+
     return trial_data

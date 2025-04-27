@@ -93,8 +93,7 @@ controller_config = {
     }
 controller = Controller.from_dict(controller_config)
 
-
-
+StimUnit(win, 'instruction_text').add_stim(stim_bank.get('instruction_text')).wait_and_continue()
 all_data = []
 for block_i in range(settings.total_blocks):
     # 8. setup block
@@ -126,10 +125,10 @@ for block_i in range(settings.total_blocks):
     )
     
     block.to_dict(all_data)
-    if block_i < settings.total_blocks - 1:
-        StimUnit(win, 'block').add_stim(stim_bank.get('block_break')).wait_and_continue()
-    else:
-        StimUnit(win, 'block').add_stim(stim_bank.get_and_format('good_bye', reward=100)).wait_and_continue(terminate=True)
+
+    StimUnit(win, 'block').add_stim(stim_bank.get_and_format('block_break', reward=100)).wait_and_continue()
+    if block_i+1 == settings.total_blocks:
+        StimUnit(win, 'block').add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
     
 import pandas as pd
 df = pd.DataFrame(all_data)
