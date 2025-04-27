@@ -110,14 +110,12 @@ for block_i in range(settings.total_blocks):
     @block.on_start
     def _block_start(b):
         print("Block start {}".format(b.block_idx))
-        # b.logging_block_info()
         trigger_sender.send(trigger_bank.get("block_onset"))
     @block.on_end
     def _block_end(b):     
         print("Block end {}".format(b.block_idx))
         trigger_sender.send(trigger_bank.get("block_end"))
-        print(b.summarize())
-        # print(b.describe())
+
     
     # 9. run block
     block.run_trial(
@@ -125,8 +123,33 @@ for block_i in range(settings.total_blocks):
     )
     
     block.to_dict(all_data)
+    tmp = block.to_dict()
+    # Separate go and stop trials
+    go_trials = [trial for trial in tmp if trial['condition'].startswith('go')]
+    stop_trials = [trial for trial in tmp if trial['condition'].startswith('stop')]
 
-    StimUnit(win, 'block').add_stim(stim_bank.get_and_format('block_break', reward=100)).wait_and_continue()
+    # --- For go trials ---
+    num_go = len(go_trials)
+    num_go_hit = sum(trial.get('go_hit', False) for trial in go_trials)
+    go_hit_rate = num_go_hit / num_go if num_go > 0 else 0
+
+    # --- For stop trials ---
+    num_stop = len(stop_trials)
+
+    # Correct stop success definition
+    num_stop_success = sum(
+        (not trial.get('go_ssd_key_press', False)) and 
+        (not trial.get('stop_unit_key_press', False)) 
+        for trial in stop_trials
+    )
+    stop_success_rate = num_stop_success / num_stop if num_stop > 0 else 0
+
+
+    StimUnit(win, 'block').add_stim(stim_bank.get_and_format('block_break', 
+                                                             block_num=block_i+1,
+                                                             total_blocks=settings.total_blocks,
+                                                             go_accuracy=go_hit_rate,
+                                                             stop_accuracy=stop_success_rate)).wait_and_continue()
     if block_i+1 == settings.total_blocks:
         StimUnit(win, 'block').add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
     

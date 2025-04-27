@@ -110,9 +110,14 @@ stimuli:
     lineColor: ''
 
   no_response_feedback  :
-    type: text
-    text: "No response"
-    color: white
+    type: textbox
+    text: |
+      【未按键】
+      请在箭头出现后按键
+    color: red
+    font: SimHei
+    alignment: center
+    letterHeight: 0.78
 
 
   block_break:
@@ -121,8 +126,8 @@ stimuli:
       【休息提示】
 
       第 {block_num} / {total_blocks} 部分完成。
-      正确率：{go_accuracy:.2f}
-      停止正确率：{stop_accuracy:.2f}
+      击中率：{go_accuracy:.2f}
+      正确停止率：{stop_accuracy:.2f}
 
       请在充分休息后按【空格键】进入下一部分。
     color: white
@@ -137,11 +142,13 @@ stimuli:
 
       在本任务中，您将看到箭头指向左或右。
       您的目标是**尽快且准确地**做出反应：
-        - 如果箭头指向左，请按【左方向键】。
-        - 如果箭头指向右，请按【右方向键】。
+        - 如果箭头指向左，请按【左方向键】
+        - 如果箭头指向右，请按【右方向键】
 
-      但是，在某些试次中，箭头出现后不久会出现一个**红色箭头**。
-      当看到红色箭头时，请尽力**抑制您的反应**，不要按任何按键。
+      在某些试次中
+      箭头出现后不久会出现红色箭头
+      当看到红色箭头时
+      请尽力抑制您的反应不要按任何按键。
 
       在没有红色箭头出现时，请快速做出反应。
       出现红色箭头时，请尽量不做出任何按键反应。
@@ -172,7 +179,7 @@ stimuli:
 timing:
   fixation_duration: [0.5, 0.8]
   go_duration: 1.0        # how long the arrow is on screen (seconds)
-  no_response_feedback_duration: 0.5
+  no_response_feedback_duration: 0.8
   iti_duration: [0.5, 0.8] # inter-trial interval (seconds)
 
 # === Triggers ===
