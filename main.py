@@ -99,37 +99,24 @@ StimUnit(win, 'instruction_text').add_stim(stim_bank.get('instruction_text')).wa
 count_down(win, 3, color='white')
 all_data = []
 for block_i in range(settings.total_blocks):
+    count_down(win, 3, color='white')
     # 8. setup block
+    block_data=[]
     block = BlockUnit(
         block_id=f"block_{block_i}",
         block_idx=block_i,
         settings=settings,
         window=win,
         keyboard=keyboard
-    )
-
-    block.generate_conditions(func=generate_valid_conditions)
-
-    @block.on_start
-    def _block_start(b):
-        print("Block start {}".format(b.block_idx))
-        trigger_sender.send(trigger_bank.get("block_onset"))
-    @block.on_end
-    def _block_end(b):     
-        print("Block end {}".format(b.block_idx))
-        trigger_sender.send(trigger_bank.get("block_end"))
-
-    
-    # 9. run block
-    block.run_trial(
-        partial(run_trial, stim_bank=stim_bank, controller=controller, trigger_sender=trigger_sender, trigger_bank=trigger_bank)
-    )
-    
-    block.to_dict(all_data)
-    tmp = block.to_dict()
+    ).generate_conditions(func=generate_valid_conditions)\
+    .on_start(lambda b: trigger_sender.send(trigger_bank.get("block_onset")))\
+    .on_end(lambda b: trigger_sender.send(trigger_bank.get("block_end")))\
+    .run_trial(partial(run_trial, stim_bank=stim_bank, controller=controller, trigger_sender=trigger_sender, trigger_bank=trigger_bank))\
+    .to_dict(all_data)\
+    .to_dict(block_data)
     # Separate go and stop trials
-    go_trials = [trial for trial in tmp if trial['condition'].startswith('go')]
-    stop_trials = [trial for trial in tmp if trial['condition'].startswith('stop')]
+    go_trials = [trial for trial in block_data if trial['condition'].startswith('go')]
+    stop_trials = [trial for trial in block_data if trial['condition'].startswith('stop')]
 
     # --- For go trials ---
     num_go = len(go_trials)
@@ -153,10 +140,10 @@ for block_i in range(settings.total_blocks):
                                                              total_blocks=settings.total_blocks,
                                                              go_accuracy=go_hit_rate,
                                                              stop_accuracy=stop_success_rate)).wait_and_continue()
-    if block_i+1 < settings.total_blocks:
-        count_down(win, 3, color='white')
-    if block_i+1 == settings.total_blocks:
-        StimUnit(win, 'block').add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
+
+        
+
+StimUnit(win, 'block').add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
     
 import pandas as pd
 df = pd.DataFrame(all_data)
