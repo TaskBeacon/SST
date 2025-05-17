@@ -112,18 +112,17 @@ stimuli:
     lineColor: ''
 
   no_response_feedback  :
-    type: textbox
+    type: text
     text: |
       【未按键】
       请在箭头出现后按键
-    color: red
     font: SimHei
-    alignment: center
-    letterHeight: 0.78
+    height: 0.78
+
 
 
   block_break:
-    type: textbox
+    type: text
     text: |
       【休息提示】
 
@@ -131,11 +130,12 @@ stimuli:
       击中率：{go_accuracy:.2f}
       正确停止率：{stop_accuracy:.2f}
 
-      请在充分休息后按【空格键】进入下一部分。
+      请在充分休息后按【空格键】
+      进入下一部分
     color: white
     font: SimHei
-    alignment: center
-    letterHeight: 0.78
+    height: 0.78
+
 
   instruction_text:
     type: textbox
