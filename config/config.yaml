@@ -19,7 +19,7 @@ subinfo_fields:
     choices: [Male, Female]
 
 subinfo_mapping:
-    subject_id: "被试号"
+    subject_id: "被试号(1-999)"
     session_name: "Session名称(Practice/Experiment)"
     experimenter: "主试姓名或缩写"
     gender: "性别"

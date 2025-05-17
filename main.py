@@ -2,7 +2,7 @@ from psyflow import BlockUnit,StimBank, StimUnit,SubInfo,TaskSettings,TriggerSen
 import pandas as pd
 from psychopy.visual import Window
 from psychopy.hardware import keyboard
-from psychopy import logging, core
+from psychopy import logging, core, event
 from functools import partial
 import serial
 from src import run_trial,Controller, generate_valid_conditions
@@ -33,6 +33,8 @@ win = Window(size=settings.size, fullscr=settings.fullscreen, screen=1,
              monitor=settings.monitor, units=settings.units, color=settings.bg_color,
              gammaErrorPolicy='ignore')
 kb = keyboard.Keyboard()
+win.mouseVisible = False 
+event.globalKeys.add(key='q',modifiers=['ctrl'],func=lambda: (win.close(), core.quit()),name='shutdown')
 settings.frame_time_seconds =win.monitorFramePeriod
 settings.win_fps = win.getActualFrameRate()
 
@@ -46,7 +48,10 @@ stim_bank = StimBank(win,cfg['stim_config']).preload_all()
 # stim_bank.preview_all() 
 
 # 8. Setup controller across blocks
-controller = Controller.from_dict(cfg['controller_config'])
+settings.controller=cfg['controller_config']
+settings.save_to_json() # save all settings to json file
+controller = Controller.from_dict(settings.controller)
+
 
 # 9. Start experiment
 StimUnit(win, 'instruction_text').add_stim(stim_bank.get('instruction_text')).wait_and_continue()
@@ -98,7 +103,6 @@ StimUnit(win, 'block').add_stim(stim_bank.get('good_bye')).wait_and_continue(ter
 # 10. Save data
 df = pd.DataFrame(all_data)
 df.to_csv(settings.res_file, index=False)
-settings.save_to_json()
 
 # 11. Close everything
 win.close()
