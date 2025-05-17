@@ -9,7 +9,6 @@ def run_trial(
     condition: str,           # 'go' or 'stop'
     stim_bank: dict,          # must contain 'fixation': ShapeStim
     controller: Controller,   # 1-up/1-down controller managing ssd
-    trigger_bank: dict,       # dict of trigger codes
     trigger_sender=None,
     
 ):
@@ -33,7 +32,7 @@ def run_trial(
         .add_stim(fix_stim) \
         .show(
             duration=settings.fixation_duration,
-            onset_trigger=trigger_bank.get('fixation_onset')
+            onset_trigger=settings.triggers.get('fixation_onset')
         ) \
         .to_dict(trial_data)
 
@@ -48,9 +47,9 @@ def run_trial(
                 keys=settings.key_list,
                 correct_keys =[_stim],
                 duration=settings.go_duration,
-                onset_trigger=trigger_bank.get('go_onset'),
-                response_trigger=trigger_bank.get('go_response'),
-                timeout_trigger=trigger_bank.get('go_miss'),
+                onset_trigger=settings.triggers.get('go_onset'),
+                response_trigger=settings.triggers.get('go_response'),
+                timeout_trigger=settings.triggers.get('go_miss'),
                 terminate_on_response=True
             )
         go_unit.to_dict(trial_data)
@@ -60,7 +59,7 @@ def run_trial(
             .add_stim(stim_bank.get('no_response_feedback')) \
             .show(
                 duration=settings.no_response_feedback_duration,  #
-                onset_trigger=trigger_bank.get('no_response_feedback_onset')  # add trigger for no response
+                onset_trigger=settings.triggers.get('no_response_feedback_onset')  # add trigger for no response
             ) \
             .to_dict(trial_data)
 
@@ -76,8 +75,8 @@ def run_trial(
             .capture_response(
                 keys=settings.key_list,
                 duration=ssd,
-                onset_trigger=trigger_bank.get('pre_stop_onset'),
-                response_trigger=trigger_bank.get('pre_top_response'),
+                onset_trigger=settings.triggers.get('pre_stop_onset'),
+                response_trigger=settings.triggers.get('pre_top_response'),
                 terminate_on_response=False
             )
         go_unit.to_dict(trial_data)
@@ -90,8 +89,8 @@ def run_trial(
             .capture_response(
                 keys=settings.key_list,
                 duration=rem,
-                onset_trigger=trigger_bank.get('on_stop_onset'),
-                response_trigger=trigger_bank.get('on_stop_response'),
+                onset_trigger=settings.triggers.get('on_stop_onset'),
+                response_trigger=settings.triggers.get('on_stop_response'),
                 terminate_on_response=True
             )
         stop_unit.to_dict(trial_data)
