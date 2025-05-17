@@ -50,8 +50,6 @@ settings = TaskSettings.from_dict(task_config)
 settings.add_subinfo(subject_data)
 
 
-
-
 # 4. Set up window & input
 win = Window(size=settings.size, fullscr=settings.fullscreen, screen=1,
              monitor=settings.monitor, units=settings.units, color=settings.bg_color,
@@ -101,7 +99,6 @@ all_data = []
 for block_i in range(settings.total_blocks):
     count_down(win, 3, color='white')
     # 8. setup block
-    block_data=[]
     block = BlockUnit(
         block_id=f"block_{block_i}",
         block_idx=block_i,
@@ -113,10 +110,9 @@ for block_i in range(settings.total_blocks):
     .on_end(lambda b: trigger_sender.send(trigger_bank.get("block_end")))\
     .run_trial(partial(run_trial, stim_bank=stim_bank, controller=controller, trigger_sender=trigger_sender, trigger_bank=trigger_bank))\
     .to_dict(all_data)\
-    .to_dict(block_data)
     # Separate go and stop trials
-    go_trials = [trial for trial in block_data if trial['condition'].startswith('go')]
-    stop_trials = [trial for trial in block_data if trial['condition'].startswith('stop')]
+    go_trials = block.get_trial_data(key='condition', pattern='go', match_type='startswith')
+    stop_trials = block.get_trial_data(key='condition', pattern='stop', match_type='startswith')
 
     # --- For go trials ---
     num_go = len(go_trials)
