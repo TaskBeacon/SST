@@ -1,13 +1,4 @@
-from psyflow import (
-    BlockUnit,
-    StimBank,
-    StimUnit,
-    SubInfo,
-    TaskSettings,
-    TriggerSender,
-    load_config,
-    count_down
-)
+from psyflow import BlockUnit,StimBank, StimUnit,SubInfo,TaskSettings,TriggerSender,load_config,count_down
 import pandas as pd
 from psychopy.visual import Window
 from psychopy.hardware import keyboard
@@ -55,15 +46,13 @@ logging.console.setLevel(logging.INFO)
 
 # 7. Setup stimulus bank
 stim_bank = StimBank(win,cfg['stim_config']).preload_all()
-
+# stim_bank.preview_all() 
 
 # 8. Setup controller across blocks
 controller = Controller.from_dict(cfg['controller_config'])
 
-
 # 9. Start experiment
 StimUnit(win, 'instruction_text').add_stim(stim_bank.get('instruction_text')).wait_and_continue()
-
 all_data = []
 for block_i in range(settings.total_blocks):
     count_down(win, 3, color='white')
