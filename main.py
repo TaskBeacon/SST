@@ -1,4 +1,5 @@
-from psyflow import BlockUnit,StimBank, StimUnit,SubInfo,TaskSettings,TriggerSender,load_config,count_down
+from psyflow import BlockUnit,StimBank, StimUnit,SubInfo,TaskSettings,TriggerSender
+from psyflow import load_config,count_down, initialize_exp
 import pandas as pd
 from psychopy.visual import Window
 from psychopy.hardware import keyboard
@@ -29,20 +30,7 @@ trigger_sender = TriggerSender(
 )
 
 # 5. Set up window & input
-win = Window(size=settings.size, fullscr=settings.fullscreen, screen=1,
-             monitor=settings.monitor, units=settings.units, color=settings.bg_color,
-             gammaErrorPolicy='ignore')
-kb = keyboard.Keyboard()
-win.mouseVisible = False 
-event.globalKeys.add(key='q',modifiers=['ctrl'],func=lambda: (win.close(), core.quit()),name='shutdown')
-settings.frame_time_seconds =win.monitorFramePeriod
-settings.win_fps = win.getActualFrameRate()
-
-# 6. Set up logging
-logging.setDefaultClock(core.Clock())
-logging.LogFile(settings.log_file, level=logging.DATA, filemode='a')
-logging.console.setLevel(logging.INFO)
-
+win, kb = initialize_exp(settings)
 # 7. Setup stimulus bank
 stim_bank = StimBank(win,cfg['stim_config']).preload_all()
 # stim_bank.preview_all() 
