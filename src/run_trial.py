@@ -24,6 +24,8 @@ def run_trial(
     # 'go_left' or 'go_right' or 'stop_left' or 'stop_right'
     _condition = condition.split('_')[0]
     _stim = condition.split('_')[1]
+    correct_key = settings.left_key if _stim  == 'left' else settings.right_key
+
 
 
     fix_stim  = stim_bank.get('fixation')
@@ -45,7 +47,7 @@ def run_trial(
             .add_stim(go_stim) \
             .capture_response(
                 keys=settings.key_list,
-                correct_keys =[_stim],
+                correct_keys=correct_key,
                 duration=settings.go_duration,
                 onset_trigger=settings.triggers.get('go_onset'),
                 response_trigger=settings.triggers.get('go_response'),

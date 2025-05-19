@@ -1,12 +1,10 @@
 from psyflow import BlockUnit,StimBank, StimUnit,SubInfo,TaskSettings,TriggerSender
 from psyflow import load_config,count_down, initialize_exp
 import pandas as pd
-from psychopy.visual import Window
-from psychopy.hardware import keyboard
-from psychopy import logging, core, event
+from psychopy import core
 from functools import partial
 import serial
-from src import run_trial,Controller, generate_valid_conditions
+from src import run_trial, Controller, generate_valid_conditions
 
 # 1. Load config
 cfg = load_config()
@@ -31,17 +29,17 @@ trigger_sender = TriggerSender(
 
 # 5. Set up window & input
 win, kb = initialize_exp(settings)
-# 7. Setup stimulus bank
+# 6. Setup stimulus bank
 stim_bank = StimBank(win,cfg['stim_config']).preload_all()
 # stim_bank.preview_all() 
 
-# 8. Setup controller across blocks
+# 7. Setup controller across blocks
 settings.controller=cfg['controller_config']
 settings.save_to_json() # save all settings to json file
 controller = Controller.from_dict(settings.controller)
 
 
-# 9. Start experiment
+# 8. Start experiment
 StimUnit(win, 'instruction_text').add_stim(stim_bank.get('instruction_text')).wait_and_continue()
 all_data = []
 for block_i in range(settings.total_blocks):
@@ -52,7 +50,7 @@ for block_i in range(settings.total_blocks):
         block_idx=block_i,
         settings=settings,
         window=win,
-        keyboard=keyboard
+        keyboard=kb
     ).generate_conditions(func=generate_valid_conditions)\
     .on_start(lambda b: trigger_sender.send(settings.triggers.get("block_onset")))\
     .on_end(lambda b: trigger_sender.send(settings.triggers.get("block_end")))\
@@ -88,11 +86,11 @@ for block_i in range(settings.total_blocks):
 # end of experiment
 StimUnit(win, 'block').add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
     
-# 10. Save data
+# 9. Save data
 df = pd.DataFrame(all_data)
 df.to_csv(settings.res_file, index=False)
 
-# 11. Close everything
+# 10. Close everything
 win.close()
 core.quit()
 

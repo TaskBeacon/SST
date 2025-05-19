@@ -45,7 +45,9 @@ task:
   total_trials: 260
   trial_per_block: 130
   conditions: [go_left, go_right, stop_left, stop_right]
-  key_list: [left, right]
+  key_list: [f, j]
+  left_key: f
+  right_key: j
   seed_mode: "same_across_sub"
 
 
@@ -142,10 +144,10 @@ stimuli:
     text: |
       【任务说明】
 
-      在本任务中，您将看到箭头指向左或右。
-      您的目标是**尽快且准确地**做出反应：
-        - 如果箭头指向左，请按【左方向键】
-        - 如果箭头指向右，请按【右方向键】
+      在本任务中，您将看到箭头指向左或右
+      您的目标是**尽快且准确地**做出反应
+        - 如果箭头指向左，请按【f】
+        - 如果箭头指向右，请按【j】
 
       在某些试次中
       箭头出现后不久会出现红色箭头
