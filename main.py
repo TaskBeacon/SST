@@ -4,7 +4,7 @@ import pandas as pd
 from psychopy import core
 from functools import partial
 import serial
-from src import run_trial, Controller, generate_valid_conditions
+from src import run_trial, Controller, generate_sst_conditions
 
 # 1. Load config
 cfg = load_config()
@@ -51,7 +51,7 @@ for block_i in range(settings.total_blocks):
         settings=settings,
         window=win,
         keyboard=kb
-    ).generate_conditions(func=generate_valid_conditions)\
+    ).generate_conditions(func=generate_sst_conditions)\
     .on_start(lambda b: trigger_sender.send(settings.triggers.get("block_onset")))\
     .on_end(lambda b: trigger_sender.send(settings.triggers.get("block_end")))\
     .run_trial(partial(run_trial, stim_bank=stim_bank, controller=controller, trigger_sender=trigger_sender))\

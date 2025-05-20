@@ -98,7 +98,7 @@ import random
 import numpy as np
 from typing import List, Optional
 
-def generate_valid_conditions(
+def generate_sst_conditions(
     n_trials: int,
     condition_labels: Optional[List[str]] = None,
     stop_ratio: float = 0.25,
