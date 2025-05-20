@@ -2,7 +2,6 @@ from psyflow import BlockUnit,StimBank, StimUnit,SubInfo,TaskSettings,TriggerSen
 from psyflow import load_config,count_down, initialize_exp
 import pandas as pd
 from psychopy import core
-from functools import partial
 import serial
 from src import run_trial, Controller, generate_sst_conditions
 
@@ -54,7 +53,7 @@ for block_i in range(settings.total_blocks):
     ).generate_conditions(func=generate_sst_conditions)\
     .on_start(lambda b: trigger_sender.send(settings.triggers.get("block_onset")))\
     .on_end(lambda b: trigger_sender.send(settings.triggers.get("block_end")))\
-    .run_trial(partial(run_trial, stim_bank=stim_bank, controller=controller, trigger_sender=trigger_sender))\
+    .run_trial(func=run_trial, stim_bank=stim_bank, controller=controller, trigger_sender=trigger_sender)\
     .to_dict(all_data)\
     
     # get block data and statistics
