@@ -5,7 +5,7 @@
   "created_by": "Zhipeng Cao",
   "date_created": "2025-04-27",
   "psyflow_version": "0.3.0",
-  "psychopy_version": "2023.2.1",
+  "psychopy_version": "2025.1.1",
   "tasks": ["SST"],
   "stimuli_dir": "assets/",
   "config_file": "config/config.yaml",
