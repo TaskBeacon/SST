@@ -91,7 +91,6 @@ df = pd.DataFrame(all_data)
 df.to_csv(settings.res_file, index=False)
 
 # 10. Close everything
-win.close()
 core.quit()
 
 
