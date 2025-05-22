@@ -30,7 +30,7 @@ trigger_sender = TriggerSender(
 win, kb = initialize_exp(settings)
 # 6. Setup stimulus bank
 stim_bank = StimBank(win,cfg['stim_config'])\
-            .convert_to_voice(['instruction_text'], voice='zh-CN-XiaoyiNeural')\
+            .convert_to_voice(['instruction_text'])\
             .preload_all()
 
 # stim_bank.preview_all() 
