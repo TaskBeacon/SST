@@ -105,7 +105,7 @@ def generate_sst_conditions(
     max_stop_run: int = 4,
     min_go_start: int = 3,
     seed: Optional[int] = None
-) -> np.ndarray:
+) -> List[str]:
     """
     As before, but uses a local RNG so the global random state is untouched.
     """
@@ -156,4 +156,4 @@ def generate_sst_conditions(
 
         break
 
-    return np.array(trial_list, dtype=object)
+    return trial_list
