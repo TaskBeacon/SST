@@ -42,7 +42,7 @@ controller = Controller.from_dict(settings.controller)
 
 
 # 8. Start experiment
-StimUnit(win, 'instruction_text')\
+StimUnit('instruction_text', win, kb)\
     .add_stim(stim_bank.get('instruction_text'))\
     .add_stim(stim_bank.get('instruction_text_voice'))\
     .wait_and_continue()
@@ -83,13 +83,13 @@ for block_i in range(settings.total_blocks):
     stop_success_rate = num_stop_success / num_stop if num_stop > 0 else 0
 
     # show block break screen and statistics
-    StimUnit(win, 'block').add_stim(stim_bank.get_and_format('block_break', 
+    StimUnit('block', win, kb).add_stim(stim_bank.get_and_format('block_break', 
                                                              block_num=block_i+1,
                                                              total_blocks=settings.total_blocks,
                                                              go_accuracy=go_hit_rate,
                                                              stop_accuracy=stop_success_rate)).wait_and_continue()
 # end of experiment
-StimUnit(win, 'block').add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
+StimUnit('block', win, kb).add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
     
 # 9. Save data
 df = pd.DataFrame(all_data)
