@@ -19,7 +19,7 @@ def run_trial(
       trial_data dict with fields 'condition','acc','rt','response', + timing/triggers.
     """
     trial_data = {'condition': condition}
-    make_unit = partial(StimUnit, win=win, triggersender=trigger_sender)
+    make_unit = partial(StimUnit, win=win, kb=kb,  triggersender=trigger_sender)
 
     # 'go_left' or 'go_right' or 'stop_left' or 'stop_right'
     _condition = condition.split('_')[0]
