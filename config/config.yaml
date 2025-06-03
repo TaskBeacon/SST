@@ -8,26 +8,29 @@ subinfo_fields:
       max: 999
       digits: 3
 
-  - name: session_name
+  - name: subname    
     type: string
 
-  - name: experimenter
-    type: string
+  - name: age 
+    type: int
+    constraints:
+      min: 5
+      max: 60
 
   - name: gender
     type: choice
     choices: [Male, Female]
 
 subinfo_mapping:
-    subject_id: "被试号(1-999)"
-    session_name: "Session名称(Practice/Experiment)"
-    experimenter: "主试姓名或缩写"
+    subject_id: "被试号"
+    subname: "被试姓名(拼音)"
+    age: "年龄"
     gender: "性别"
     Male: "男"
     Female: "女"
     registration_failed: "注册失败。"
     registration_successful: "注册成功！"
-    invalid_input: "字段 {field} 输入无效。"
+    invalid_input: "字段 {field} 输入无效"
 
 
 # === Window settings ===
@@ -37,14 +40,15 @@ window:
   screen: 1
   bg_color: gray
   fullscreen: True
-  monitor_width_cm: 33.62
-  monitor_distance_cm: 57
+  monitor_width_cm: 60
+  monitor_distance_cm: 72
 
 # === Task-level settings ===
 task:
-  total_blocks: 2
-  total_trials: 260
-  trial_per_block: 130
+  task_name: "eeg_sst"
+  total_blocks: 4
+  total_trials: 320
+  trial_per_block: 80
   conditions: [go_left, go_right, stop_left, stop_right]
   key_list: [f, j]
   left_key: f
@@ -143,15 +147,14 @@ stimuli:
   instruction_text:
     type: textbox
     text: |
-      【停止信号任务】
-      任务说明
+      【停止信号任务说明】
 
       在本任务中，您将看到箭头指向左或右
       您的目标是尽快且准确地做出反应
-        - 如果箭头指向左，请按【f】
-        - 如果箭头指向右，请按【j】
+        - 如果箭头指向左，请用左手食指按【F】
+        - 如果箭头指向右，请用右手食指按【J】
 
-      在某些试次中
+      注意：在某些试次中
       箭头出现后不久会出现红色箭头
       当看到红色箭头时
       请尽力抑制您的反应不要按任何按键
@@ -164,6 +167,8 @@ stimuli:
     font: SimHei
     alignment: center
     letterHeight: 0.78
+    units: deg
+    size: [20, 5]
 
   iti_stim:
     type: text

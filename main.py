@@ -19,9 +19,10 @@ settings.add_subinfo(subject_data)
 # 4. setup triggers
 settings.triggers = cfg['trigger_config']
 ser = serial.serial_for_url("loop://", baudrate=115200, timeout=1)
+# ser = serial.Serial("COM3", baudrate=115200, timeout=1)
 trigger_sender = TriggerSender(
     trigger_func=lambda code: ser.write([1, 225, 1, 0, (code)]),
-    post_delay=0,
+    post_delay=0.001,
     on_trigger_start=lambda: ser.open() if not ser.is_open else None,
     on_trigger_end=lambda: ser.close()
 )
@@ -42,7 +43,7 @@ controller = Controller.from_dict(settings.controller)
 
 
 # 8. Start experiment
-StimUnit('instruction_text', win, kb)\
+StimUnit('instruction_text',win,kb)\
     .add_stim(stim_bank.get('instruction_text'))\
     .add_stim(stim_bank.get('instruction_text_voice'))\
     .wait_and_continue()
@@ -83,13 +84,13 @@ for block_i in range(settings.total_blocks):
     stop_success_rate = num_stop_success / num_stop if num_stop > 0 else 0
 
     # show block break screen and statistics
-    StimUnit('block', win, kb).add_stim(stim_bank.get_and_format('block_break', 
+    StimUnit('block',win,kb).add_stim(stim_bank.get_and_format('block_break', 
                                                              block_num=block_i+1,
                                                              total_blocks=settings.total_blocks,
                                                              go_accuracy=go_hit_rate,
                                                              stop_accuracy=stop_success_rate)).wait_and_continue()
 # end of experiment
-StimUnit('block', win, kb).add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
+StimUnit('block',win,kb).add_stim(stim_bank.get('good_bye')).wait_and_continue(terminate=True)
     
 # 9. Save data
 df = pd.DataFrame(all_data)
