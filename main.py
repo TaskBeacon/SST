@@ -78,7 +78,7 @@ for block_i in range(settings.total_blocks):
     # Correct stop success definition
     num_stop_success = sum(
         (not trial.get('go_ssd_key_press', False)) and 
-        (not trial.get('stop_unit_key_press', False)) 
+        (not trial.get('stop_key_press', False)) 
         for trial in stop_trials
     )
     stop_success_rate = num_stop_success / num_stop if num_stop > 0 else 0
