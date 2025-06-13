@@ -1,4 +1,4 @@
-# Stop-Signal Task (SST) – PsyFlow Version
+# Stop-Signal Task (SST) – audio Version
 
 This task implements a Stop-Signal paradigm (SST) to assess inhibitory control mechanisms. Participants are asked to respond to left- or right-pointing arrows, but on some trials, they must inhibit their response when a red arrow appears. The task is built using the [PsyFlow](https://taskbeacon.github.io/psyflow/) framework.
 
