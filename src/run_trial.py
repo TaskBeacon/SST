@@ -104,5 +104,4 @@ def run_trial(
         # 3d) Update ssd staircase (+/- settings.staircase)
         controller.update(success=not failed_stop)
 
-
     return trial_data

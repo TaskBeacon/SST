@@ -46,9 +46,9 @@ window:
 # === Task-level settings ===
 task:
   task_name: "eeg_sst"
-  total_blocks: 4
-  total_trials: 320
-  trial_per_block: 80
+  total_blocks: 3
+  total_trials: 210
+  trial_per_block: 70
   conditions: [go_left, go_right, stop_left, stop_right]
   key_list: [f, j]
   left_key: f
@@ -170,9 +170,6 @@ stimuli:
     units: deg
     size: [20, 5]
 
-  iti_stim:
-    type: text
-    text: ""
 
   good_bye:
     type: textbox
@@ -188,10 +185,9 @@ stimuli:
 
 # === Timing & Adaptivity ===
 timing:
-  fixation_duration: [0.5, 0.8]
-  go_duration: 1.0        # how long the arrow is on screen (seconds)
+  fixation_duration: [0.8, 1]
+  go_duration: 1.0        
   no_response_feedback_duration: 0.8
-  iti_duration: [0.5, 0.8] # inter-trial interval (seconds)
 
 # === Triggers ===
 triggers:
