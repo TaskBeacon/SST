@@ -137,3 +137,6 @@ Participants completed a stop-signal task (SST) designed to evaluate response in
 
 ## 5. References
 
+>Kok, A., Ramautar, J. R., De Ruiter, M. B., Band, G. P., & Ridderinkhof, K. R. (2004). ERP components associated with successful and unsuccessful stopping in a stop‐signal task. Psychophysiology, 41(1), 9-20.
+
+>Casey, B. J., Cannonier, T., Conley, M. I., Cohen, A. O., Barch, D. M., Heitzeg, M. M., ... & Dale, A. M. (2018). The adolescent brain cognitive development (ABCD) study: imaging acquisition across 21 sites. Developmental cognitive neuroscience, 32, 43-54.
