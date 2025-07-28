@@ -33,7 +33,7 @@ trigger_sender = TriggerSender(
 win, kb = initialize_exp(settings)
 # 6. Setup stimulus bank
 stim_bank = StimBank(win,cfg['stim_config'])\
-            .convert_to_voice(['instruction_text'])\
+            .convert_to_voice(['instruction_text'], voice=settings.voice_name)\
             .preload_all()
 
 # stim_bank.preview_all() 
@@ -101,6 +101,3 @@ df.to_csv(settings.res_file, index=False)
 # 10. Close everything
 ser.close()
 core.quit()
-
-
-
