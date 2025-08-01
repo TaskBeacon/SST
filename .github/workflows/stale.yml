@@ -1,4 +1,0 @@
-branches:
-  exempt:
-    - main
-    - variant/SST-Audio  # Add your branch here
