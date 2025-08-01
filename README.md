@@ -1,9 +1,9 @@
-# Stop-Signal Task (SST)
+# Stop-Signal Task (SST-Audio) 
 
 | Field                | Value                        |
 |----------------------|------------------------------|
-| Name                 | Stop-Signal Task (SST)       |
-| Version              | main (1.0)                          |
+| Name                 | Stop-Signal Task (SST-Audio)       |
+| Version              | Variant/SST-Audio (1.0)                          |
 | URL / Repository     | https://github.com/TaskBeacon/SST        |
 | Short Description    | A response inhibition task measuring the ability to suppress prepotent motor responses |
 | Created By           | Zhipeng Cao (zhipeng30@foxmail.com) |
@@ -16,7 +16,7 @@
 
 ## 1. Task Overview
 
-The Stop-Signal Task (SST) is a cognitive paradigm used to assess response inhibition—the ability to withhold an already-initiated action. In each trial, participants are instructed to respond to directional go stimuli (left or right arrows) by pressing the corresponding key. On a subset of trials, a red stop signal appears shortly after the go stimulus, indicating that the participant should inhibit their response. The delay between the go and stop signal (SSD) is adaptively adjusted to maintain a 50% stop success rate.
+The Stop-Signal Task (SST) is a cognitive paradigm used to assess response inhibition—the ability to withhold an already-initiated action. In each trial, participants are instructed to respond to directional go stimuli (left or right arrows) by pressing the corresponding key. On a subset of trials, an auditory stop signal (a beep) sounds shortly after the go stimulus, indicating that the participant should inhibit their response. The delay between the go and stop signal (SSD) is adaptively adjusted to maintain a 50% stop success rate.
 
 ## 2. Task Flow
 
@@ -43,7 +43,7 @@ The Stop-Signal Task (SST) is a cognitive paradigm used to assess response inhib
 |---------------------|-----------------------------------------------------------------------------|
 | Fixation            | Present fixation cross for 0.8–1.0s with trigger                            |
 | Go Only Trial       | Present arrow; wait up to 1s for correct keypress; show feedback if none    |
-| Stop Trial          | Present arrow for SSD duration; then switch to red stop signal              |
+| Stop Trial          | Present arrow for SSD duration; then play auditory stop signal              |
 | Response Recording  | Capture whether responses occurred before or after stop signal              |
 | Adaptive Update     | Adjust SSD based on stop success/failure                                    |
 
@@ -88,8 +88,7 @@ The Stop-Signal Task (SST) is a cognitive paradigm used to assess response inhib
 | fixation               | text   | White cross "+"                                     |
 | go_left                | shape  | White left-pointing arrow                           |
 | go_right               | shape  | White right-pointing arrow                          |
-| stop_left              | shape  | Red left-pointing arrow                             |
-| stop_right             | shape  | Red right-pointing arrow                            |
+| stop_signal            | sound  | Auditory beep for the stop signal             |
 | no_response_feedback   | text   | Message shown if participant fails to respond       |
 | block_break            | text   | Inter-block feedback with hit/stop accuracy         |
 | instruction_text       | textbox| Full task instructions with keys and stop rule      |
@@ -135,7 +134,7 @@ The Stop-Signal Task (SST) is a cognitive paradigm used to assess response inhib
 
 ## 4. Methods (for academic publication)
 
-Participants completed a stop-signal task (SST) designed to evaluate response inhibition. The task consisted of **3 blocks**, each containing **70 trials**, resulting in a total of **210 trials**. On each trial, participants saw a directional arrow (left or right) and were instructed to press the corresponding key—“F” for left, “J” for right—as quickly and accurately as possible. On **25% of the trials**, the arrow changed color (white to red) shortly after its onset, signaling the participant to inhibit their response. The delay between the go stimulus and the stop signal—the stop-signal delay (SSD)—was controlled adaptively using a 1-up/1-down staircase procedure. The SSD increased after successful inhibition and decreased after failed inhibition, with a target success rate of 50%.Trials began with a fixation cross (0.8–1.0s), followed by a go arrow. On go trials, the arrow remained on screen for up to 1 second or until a keypress. If no response occurred, a warning message was presented. On stop trials, the red stop signal replaced the arrow after an SSD-determined delay. Responses were recorded for both go and stop phases. The SSD was adjusted per trial based on inhibition performance. Participants received a break after each block, displaying their hit rate on go trials and success rate on stop trials.
+Participants completed a stop-signal task (SST) designed to evaluate response inhibition. The task consisted of **3 blocks**, each containing **70 trials**, resulting in a total of **210 trials**. On each trial, participants saw a directional arrow (left or right) and were instructed to press the corresponding key—“F” for left, “J” for right—as quickly and accurately as possible. On **25% of the trials**, an auditory stop signal (a beep) was presented shortly after its onset, signaling the participant to inhibit their response. The delay between the go stimulus and the stop signal—the stop-signal delay (SSD)—was controlled adaptively using a 1-up/1-down staircase procedure. The SSD increased after successful inhibition and decreased after failed inhibition, with a target success rate of 50%.Trials began with a fixation cross (0.8–1.0s), followed by a go arrow. On go trials, the arrow remained on screen for up to 1 second or until a keypress. If no response occurred, a warning message was presented. On stop trials, the auditory stop signal was presented after an SSD-determined delay. Responses were recorded for both go and stop phases. The SSD was adjusted per trial based on inhibition performance. Participants received a break after each block, displaying their hit rate on go trials and success rate on stop trials.
 
 ## 5. References
 

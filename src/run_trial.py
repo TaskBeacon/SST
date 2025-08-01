@@ -68,7 +68,7 @@ def run_trial(
 
     # 3) Stop trial branch
     else:
-        stop_stim = stim_bank.get(condition)
+        stop_stim = stim_bank.get('stop_signal')
         go_stim = stim_bank.get(condition.replace('stop', 'go'))
         # 3a) Phase 1: present go_stim for ssd, do NOT terminate on presses
         ssd     = controller.get_ssd()
@@ -84,11 +84,10 @@ def run_trial(
         go_unit.to_dict(trial_data)
         resp1 = go_unit.get_state('key_press', False)
 
-        # 3b) Phase 2: switch immediately to stop_stim for remaining time
+        # 3b) Phase
+# 2: switch immediately to stop_stim for remaining time
         rem = settings.go_duration - ssd
-        stop_unit = make_unit(unit_label='stop') \
-            .add_stim(stop_stim) \
-            .capture_response(
+        stop_unit = make_unit(unit_label='stop').add_stim(go_stim).add_stim(stop_stim).capture_response(
                 keys=settings.key_list,
                 duration=rem,
                 onset_trigger=settings.triggers.get('on_stop_onset'),

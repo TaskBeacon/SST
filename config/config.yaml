@@ -92,33 +92,9 @@ stimuli:
     size: 8
     lineColor: ''
 
-  stop_left:
-    type: shape
-    vertices:
-      - [ 0.20,  0.05]
-      - [ 0.20, -0.05]
-      - [ 0.00, -0.05]
-      - [ 0.00, -0.10]
-      - [-0.20,  0.00]
-      - [ 0.00,  0.10]
-      - [ 0.00,  0.05]
-    fillColor: red
-    size: 8
-    lineColor: ''
-
-  stop_right:
-    type: shape
-    vertices:
-      - [-0.20,  0.05]
-      - [-0.20, -0.05]
-      - [ 0.00, -0.05]
-      - [ 0.00, -0.10]
-      - [ 0.20,  0.00]
-      - [ 0.00,  0.10]
-      - [ 0.00,  0.05]
-    fillColor: red
-    size: 8
-    lineColor: ''
+  stop_signal:
+    type: sound
+    file: .\assets\beep.mp3
 
   no_response_feedback  :
     type: text
@@ -157,12 +133,11 @@ stimuli:
         - 如果箭头指向右，请用右手食指按【J】
 
       注意：在某些试次中
-      箭头出现后不久会出现红色箭头
-      当看到红色箭头时
+      当听到【哔】声时
       请尽力抑制您的反应不要按任何按键
 
-      在没有红色箭头出现时，请快速做出反应
-      出现红色箭头时，请尽量不做出任何按键反应
+      在没有【哔】声出现时，请快速做出反应
+      出现【哔】声时，请尽量不做出任何按键反应
 
       准备好后，请按【空格键】开始任务。
     color: white
