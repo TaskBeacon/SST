@@ -4,7 +4,7 @@
 |----------------------|------------------------------|
 | Name                 | Stop-Signal Task (SST-Audio)       |
 | Version              | Variant/SST-Audio (1.0)                          |
-| URL / Repository     | https://github.com/TaskBeacon/SST        |
+| URL / Repository     | https://github.com/TaskBeacon/SST/tree/variant/SST-Audio        |
 | Short Description    | A response inhibition task measuring the ability to suppress prepotent motor responses |
 | Created By           | Zhipeng Cao (zhipeng30@foxmail.com) |
 | Date Updated         |2025/06/22                              |
